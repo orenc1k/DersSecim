@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EmQQmAC8gGOC5GhznW/NG/HUA3xuHmAkrHuId0KGsROOIPahjf6Bm01x2FAGM0/ZhuhdzR/GnPETjrP18oU/Vg==",
+  "dgSpecHash": "Ix4r3jssRxVZ78z7Azp+xk2TJAS5zI6E8O8ZDm/eFjLukOx3KCtRRVkY5bI1M9q8OD8E8cbFHA4M7mFzEpGfKw==",
   "success": true,
-  "projectFilePath": "/Users/arel/Projects/ODTUDersSecim/ODTUDersSecim/ODTUDersSecim.csproj",
+  "projectFilePath": "/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/ODTUDersSecim.csproj",
   "expectedPackageFiles": [
     "/Users/arel/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/arel/.nuget/packages/microsoft.entityframeworkcore/7.0.10/microsoft.entityframeworkcore.7.0.10.nupkg.sha512",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/arel/Projects/ODTUDersSecim/ODTUDersSecim/ODTUDersSecim.csproj": {}
+    "/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/ODTUDersSecim.csproj": {}
   },
   "projects": {
-    "/Users/arel/Projects/ODTUDersSecim/ODTUDersSecim/ODTUDersSecim.csproj": {
+    "/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/ODTUDersSecim.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/arel/Projects/ODTUDersSecim/ODTUDersSecim/ODTUDersSecim.csproj",
+        "projectUniqueName": "/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/ODTUDersSecim.csproj",
         "projectName": "ODTUDersSecim",
-        "projectPath": "/Users/arel/Projects/ODTUDersSecim/ODTUDersSecim/ODTUDersSecim.csproj",
+        "projectPath": "/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/ODTUDersSecim.csproj",
         "packagesPath": "/Users/arel/.nuget/packages/",
-        "outputPath": "/Users/arel/Projects/ODTUDersSecim/ODTUDersSecim/obj/",
+        "outputPath": "/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/arel/.nuget/NuGet/NuGet.Config"
