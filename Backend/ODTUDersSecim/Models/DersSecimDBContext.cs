@@ -16,7 +16,8 @@ namespace ODTUDersSecim.Models
         public DbSet<CengSubjects> CengSubjects { get; set; }
         public DbSet<AEESubjects> AEESubjects { get; set; }
         public DbSet<Departments> Departments { get; set; }
-
+        public DbSet<Subjects> Subjects { get; set; }
+        public DbSet<SubjectSections> SubjectSections { get; set; }
     }
 }
 
