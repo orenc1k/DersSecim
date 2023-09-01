@@ -1,12 +1,14 @@
 ﻿<Properties StartupConfiguration="{2802A78D-C73E-4146-AF26-20663051F4C1}|Default">
-  <MonoDevelop.Ide.ItemProperties.ODTUDersSecim PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ODTUDersSecim/Services/DepartmentService.cs">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/Services/CengDersSecimService.cs" relfile="ODTUDersSecim/Services/CengDersSecimService.cs" line="22" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ODTUDersSecim/Services/CengDersSecimService.cs">
     <Files>
-      <File FileName="ODTUDersSecim/Program.cs" Line="31" Column="49" />
-      <File FileName="ODTUDersSecim/Services/CengDersSecimService.cs" />
-      <File FileName="ODTUDersSecim/appsettings.json" />
+      <File FileName="ODTUDersSecim/Program.cs" />
+      <File FileName="ODTUDersSecim/Services/CengDersSecimService.cs" Line="22" Column="1" />
+      <File FileName="ODTUDersSecim/appsettings.json" Line="3" Column="110" />
       <File FileName="ODTUDersSecim/Controllers/CengController.cs" />
       <File FileName="ODTUDersSecim/Services/IDersSecim.cs" />
       <File FileName="ODTUDersSecim/Models/CengSubjects.cs" />
@@ -22,7 +24,6 @@
       <File FileName="ODTUDersSecim/Models/Departments.cs" />
       <File FileName="ODTUDersSecim/Models/AEESubjects.cs" />
       <File FileName="ODTUDersSecim/Controllers/DepartmentController.cs" />
-      <File FileName="../../../../usr/local/share/dotnet/sdk/7.0.307/Microsoft.Common.CurrentVersion.targets" />
       <File FileName="ODTUDersSecim/Services/DepartmentService.cs" Line="1" Column="1" />
     </Files>
     <Pads>
@@ -35,19 +36,15 @@
               <Node name="Migrations" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Properties" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="DepartmentService.cs" selected="True" />
-              </Node>
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/arel/Projects/ODTUDersSecim/ODTUDersSecim/Services/CengDersSecimService.cs" relfile="ODTUDersSecim/Services/CengDersSecimService.cs" line="22" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.ODTUDersSecim PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
 </Properties>

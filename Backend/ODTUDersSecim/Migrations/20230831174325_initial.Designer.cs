@@ -12,8 +12,8 @@ using ODTUDersSecim.Models;
 namespace ODTUDersSecim.Migrations
 {
     [DbContext(typeof(ODTUDersSecimDBContext))]
-    [Migration("20230827114753_NewMigrationName")]
-    partial class NewMigrationName
+    [Migration("20230831174325_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,6 +92,96 @@ namespace ODTUDersSecim.Migrations
                     b.HasKey("DeptCode");
 
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("ODTUDersSecim.Models.SubjectSections", b =>
+                {
+                    b.Property<int>("SectionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SectionId"));
+
+                    b.Property<string>("EndChar")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EndGrade")
+                        .HasColumnType("text");
+
+                    b.Property<string>("GivenDept")
+                        .HasColumnType("text");
+
+                    b.Property<float?>("MaxCumGpa")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("MaxYear")
+                        .HasColumnType("integer");
+
+                    b.Property<float?>("MinCumGpa")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("MinYear")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SectionCode")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("StartChar")
+                        .HasColumnType("text");
+
+                    b.Property<string>("StartGrade")
+                        .HasColumnType("text");
+
+                    b.Property<int>("SubjectCode")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SubjectsSubjectCode")
+                        .HasColumnType("integer");
+
+                    b.HasKey("SectionId");
+
+                    b.HasIndex("SubjectsSubjectCode");
+
+                    b.ToTable("SubjectSections");
+                });
+
+            modelBuilder.Entity("ODTUDersSecim.Models.Subjects", b =>
+                {
+                    b.Property<int>("SubjectCode")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectCode"));
+
+                    b.Property<int?>("SubjectCredit")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SubjectLevel")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SubjectName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SubjectType")
+                        .HasColumnType("text");
+
+                    b.HasKey("SubjectCode");
+
+                    b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("ODTUDersSecim.Models.SubjectSections", b =>
+                {
+                    b.HasOne("ODTUDersSecim.Models.Subjects", "Subjects")
+                        .WithMany("SubjectSections")
+                        .HasForeignKey("SubjectsSubjectCode");
+
+                    b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("ODTUDersSecim.Models.Subjects", b =>
+                {
+                    b.Navigation("SubjectSections");
                 });
 #pragma warning restore 612, 618
         }

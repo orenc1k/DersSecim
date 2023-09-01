@@ -29,6 +29,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<CengDersSecimService>();
 builder.Services.AddScoped<DepartmentService>();
+builder.Services.AddScoped<SubjectsService>();
+builder.Services.AddScoped<SubjectSectionsService>();
 
 builder.Services.AddSwaggerGen();
 

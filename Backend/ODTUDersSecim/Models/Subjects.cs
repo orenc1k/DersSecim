@@ -17,7 +17,7 @@ namespace ODTUDersSecim.Models
 
         public string? SubjectType { get; set; }
 
-        public ICollection<SubjectSections>? SubjectSections { get; set; }
+    
 
     }
 }
