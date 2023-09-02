@@ -6,6 +6,7 @@ import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import departments from "./Departments";
 import timeSlots from "./Timeslots";
 import daysOfWeek from "./DaysOfWeek";
+import userDepartments from "../Departments/Departments";
 
 const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
@@ -17,6 +18,7 @@ const ScheduleTable = () => {
   const [cgpa, setCGPA] = useState("");
   const [selectedSemester, setSelectedSemester] = useState("");
   const [selectedDepartmentFile, setSelectedDepartmentFile] = useState(null);
+  const [selectedUserDepartmentFile, setSelectedUserDepartmentFile] = useState(null);
   const [selectedClass, setSelectedClass] = useState('');
   const [availableClasses, setAvailableClasses] = useState([]);
   const [takenElectiveCourses, setTakenElectiveCourses] = useState([]);
@@ -31,13 +33,17 @@ const ScheduleTable = () => {
       });
     }
 
-  }, [selectedDepartmentFile]);
+  }, [selectedDepartmentFile,selectedUserDepartmentFile]);
 
   const handleDepartmentChange = (selectedDepartment) => {
     setDepartment(selectedDepartment);
     setSelectedDepartmentFile(`${selectedDepartment.replace(/\s+/g, "")}`);
   };
 
+  const handleUserDepartmentChange = (selectedDepartment) => {
+    setUserDepartment(selectedDepartment);
+    setSelectedUserDepartmentFile(`${selectedDepartment.replace(/\s+/g, "")}`);
+  };
   const handleCellClick = (time, day) => {
     const updatedSchedule = { ...schedule };
     if (!updatedSchedule[time]) {
@@ -127,12 +133,20 @@ const handleAddMustCourse = (selectedSemester) => {
         </div>
         <div style={{ marginBottom: "10px" }}>
           <label>Department:</label>
-          <input
-            type="text"
+          <Select
             value={userDepartment}
-            onChange={(e) => setUserDepartment(e.target.value)}
+            onChange={(e) => handleUserDepartmentChange(e.target.value)}
             style={{ marginLeft: "10px" }}
-          />
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {userDepartments.map((Departments) => (
+              <MenuItem key={Departments} value={Departments}>
+                {Departments}
+              </MenuItem>
+            ))}
+          </Select>
         </div>
         <div style={{ marginBottom: "10px" }}>
           <label>CGPA:</label>
