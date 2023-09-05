@@ -1,3 +1,6 @@
+import React from "react";
+import { Select, MenuItem, FormControl } from "@mui/material";
+
 const departments = [
     "Actuarial Science",
     "Aerospace Engineering",
@@ -159,4 +162,54 @@ const departments = [
     "Welding Technology",
     "Work Based Learning Studies (International Joint Program)",
   ];
-  export default departments;
+
+const formContainerStyle = {
+    display: "flex",
+    alignItems: "center", // Center elements vertically
+    marginTop: "5px",
+    marginLeft:"250px",
+    border:"1px solid red",
+    borderRadius:"5px",
+    padding:"5px",
+    backgroundColor:"lightblue"
+  };
+  const labelStyle = {
+    fontWeight: "bold",
+    marginRight: "10px",
+    margin: "0 10px", // Add margin to both left and right sides of the label
+  };  
+  
+  export const handleDepartmentChange = (selectedDepartment,setDepartment,setSelectedDepartmentFile) => {
+    setDepartment(selectedDepartment);
+    setSelectedDepartmentFile(`${selectedDepartment.replace(/\s+/g, "")}`);
+  };
+
+
+  const Departments = ({department,setDepartment,setSelectedDepartmentFile}) => {
+
+    return (
+      <div>
+        <FormControl sx={{ m: -0.5, minWidth: 10 }} size="small">
+            <div style={formContainerStyle}>
+              <label style={{labelStyle,color:"orange"}}>Department:</label>
+              <Select
+                value={department}
+                onChange={(e) => handleDepartmentChange(e.target.value,setDepartment,setSelectedDepartmentFile)}
+                style={{ marginLeft: "10px" }}
+              >
+                {/* Options for the Department Select */}
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {departments.map((department) => (
+                  <MenuItem key={department} value={department}>
+                    {department}
+                  </MenuItem>
+                ))}
+              </Select>
+            </div>
+          </FormControl>
+      </div>
+    );
+  };
+  export default Departments;

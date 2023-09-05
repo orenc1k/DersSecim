@@ -1,3 +1,6 @@
+import axios from "axios";
+import {AddDepartment} from "./crud";
+
 /* const axios = require('axios');
 const cheerio = require('cheerio');
 const puppeteer = require("puppeteer");
@@ -135,7 +138,7 @@ const main = async () => {
                 : "",
             };
             optionValueArray.push(value);
- /*            console.log(new_Department);
+            /*            console.log(new_Department);
             console.log(departmentsArray); */
             departmentsArray.push(new_Department);
           }
@@ -149,56 +152,95 @@ const main = async () => {
     );
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const fulldepts : string [] = [];
-/*     console.log(optionValues);
+    const fulldepts: string[] = [];
+    /*     console.log(optionValues);
     console.log(departments); */
     for (let dep in departments) {
       fulldepts.push(departments[dep].deptFullName);
+
+      const addedDepartment = {
+        deptCode: departments[dep].deptCode,
+        deptShortName: departments[dep].deptShortName,
+        deptFullName: departments[dep].deptFullName,
+      } as Department;
+
+      async function addNewDepartment() {
+        const newDepartment: Department = {
+          deptCode: 123,
+          deptShortName: 'CS',
+          deptFullName: 'Computer Science',
+        };
+      
+        try {
+          const addedDepartment = await AddDepartment(newDepartment);
+          console.log('Added department:', addedDepartment);
+        } catch (error) {
+          console.error('Error adding department:', error);
+        }
+      }
+       addNewDepartment();
+       console.log(addedDepartment);
     }
-    console.log(fulldepts);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+   
+
+    /*     console.log(fulldepts);
+     */ await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await page.select('select[name="select_dept"]', "572");
     await page.click('input[type="submit"][name="submit_CourseList"]');
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    const allCourses : string [] = [];
+    const allCourses: string[] = [];
     const scrapedData = await page.evaluate(() => {
       const courseData: Course[] = [];
-      const rows = document.querySelectorAll('table tr');
-    
-      for (let i = 2; i < rows.length; i++) { // Skip the header row
-        const columns = rows[i].querySelectorAll('td');
-        if (columns.length >= 7) { // Ensure the row has enough columns
-          const courseCode = columns[1].textContent ? columns[1].textContent.trim() : '';
-          const courseName = columns[2].textContent ? columns[2].textContent.trim().split("(")[0].trim() : '';
-          const ectsCredit = columns[3].textContent ? columns[3].textContent.trim() : '';
-          const credit = columns[4].textContent ? columns[4].textContent.trim() : '';
-          const level = columns[5].textContent ? columns[5].textContent.trim() : '';
-          const courseType = columns[6].textContent ? columns[6].textContent.trim() : '';
-    
+      const rows = document.querySelectorAll("table tr");
+
+      for (let i = 2; i < rows.length; i++) {
+        // Skip the header row
+        const columns = rows[i].querySelectorAll("td");
+        if (columns.length >= 7) {
+          // Ensure the row has enough columns
+          const courseCode = columns[1].textContent
+            ? columns[1].textContent.trim()
+            : "";
+          const courseName = columns[2].textContent
+            ? columns[2].textContent.trim().split("(")[0].trim()
+            : "";
+          const ectsCredit = columns[3].textContent
+            ? columns[3].textContent.trim()
+            : "";
+          const credit = columns[4].textContent
+            ? columns[4].textContent.trim()
+            : "";
+          const level = columns[5].textContent
+            ? columns[5].textContent.trim()
+            : "";
+          const courseType = columns[6].textContent
+            ? columns[6].textContent.trim()
+            : "";
+
           const newCourse = {
-            'code': courseCode,
-            'name': courseName,
-            'ects': ectsCredit,
-            'credit': credit,
-            'level': level,
-            'type': courseType
+            code: courseCode,
+            name: courseName,
+            ects: ectsCredit,
+            credit: credit,
+            level: level,
+            type: courseType,
           };
-          if (courseCode !== 'Code')
-          courseData.push(newCourse);
+          if (courseCode !== "Code") courseData.push(newCourse);
         }
       }
-    
+
       return courseData;
     });
     for (let courses in scrapedData) {
       allCourses.push(scrapedData[courses].name);
     }
-    console.log(scrapedData);
-    console.log(allCourses);
+    /*     console.log(scrapedData);
+    console.log(allCourses); */
 
-/*     const fs = require('fs');
+    /*     const fs = require('fs');
     
     // Convert the array to a JSON string
     const arrayAsJSON = JSON.stringify(allCourses, null, 2); // Use 2 spaces for formatting

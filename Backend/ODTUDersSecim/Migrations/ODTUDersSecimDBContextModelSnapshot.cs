@@ -22,56 +22,6 @@ namespace ODTUDersSecim.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ODTUDersSecim.Models.AEESubjects", b =>
-                {
-                    b.Property<int>("SubjectCode")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectCode"));
-
-                    b.Property<int?>("SubjectCredit")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("SubjectLevel")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubjectName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubjectType")
-                        .HasColumnType("text");
-
-                    b.HasKey("SubjectCode");
-
-                    b.ToTable("AEESubjects");
-                });
-
-            modelBuilder.Entity("ODTUDersSecim.Models.CengSubjects", b =>
-                {
-                    b.Property<int>("SubjectCode")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectCode"));
-
-                    b.Property<int?>("SubjectCredit")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("SubjectLevel")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubjectName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubjectType")
-                        .HasColumnType("text");
-
-                    b.HasKey("SubjectCode");
-
-                    b.ToTable("CengSubjects");
-                });
-
             modelBuilder.Entity("ODTUDersSecim.Models.Departments", b =>
                 {
                     b.Property<int>("DeptCode")
@@ -89,6 +39,53 @@ namespace ODTUDersSecim.Migrations
                     b.HasKey("DeptCode");
 
                     b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("ODTUDersSecim.Models.SectionDays", b =>
+                {
+                    b.Property<int>("SectionDaysId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SectionDaysId"));
+
+                    b.Property<string>("Day1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Day2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Day3")
+                        .HasColumnType("text");
+
+                    b.Property<int>("SectionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SubjectCode")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SubjectSectionsSectionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("SubjectsSubjectCode")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Time1")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Time2")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Time3")
+                        .HasColumnType("text");
+
+                    b.HasKey("SectionDaysId");
+
+                    b.HasIndex("SubjectSectionsSectionId");
+
+                    b.HasIndex("SubjectsSubjectCode");
+
+                    b.ToTable("SectionDays");
                 });
 
             modelBuilder.Entity("ODTUDersSecim.Models.SubjectSections", b =>
@@ -167,6 +164,21 @@ namespace ODTUDersSecim.Migrations
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("ODTUDersSecim.Models.SectionDays", b =>
+                {
+                    b.HasOne("ODTUDersSecim.Models.SubjectSections", "SubjectSections")
+                        .WithMany("SectionDays")
+                        .HasForeignKey("SubjectSectionsSectionId");
+
+                    b.HasOne("ODTUDersSecim.Models.Subjects", "Subjects")
+                        .WithMany("SectionDays")
+                        .HasForeignKey("SubjectsSubjectCode");
+
+                    b.Navigation("SubjectSections");
+
+                    b.Navigation("Subjects");
+                });
+
             modelBuilder.Entity("ODTUDersSecim.Models.SubjectSections", b =>
                 {
                     b.HasOne("ODTUDersSecim.Models.Subjects", "Subjects")
@@ -176,8 +188,15 @@ namespace ODTUDersSecim.Migrations
                     b.Navigation("Subjects");
                 });
 
+            modelBuilder.Entity("ODTUDersSecim.Models.SubjectSections", b =>
+                {
+                    b.Navigation("SectionDays");
+                });
+
             modelBuilder.Entity("ODTUDersSecim.Models.Subjects", b =>
                 {
+                    b.Navigation("SectionDays");
+
                     b.Navigation("SubjectSections");
                 });
 #pragma warning restore 612, 618

@@ -13,11 +13,10 @@ namespace ODTUDersSecim.Models
             this.configuration = configuration;
         }
 
-        public DbSet<CengSubjects> CengSubjects { get; set; }
-        public DbSet<AEESubjects> AEESubjects { get; set; }
         public DbSet<Departments> Departments { get; set; }
         public DbSet<Subjects> Subjects { get; set; }
         public DbSet<SubjectSections> SubjectSections { get; set; }
+        public DbSet<SectionDays> SectionDays { get; set; }
     }
 }
 

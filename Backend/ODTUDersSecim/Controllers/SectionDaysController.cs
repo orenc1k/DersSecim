@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ODTUDersSecim.Services;
+using Microsoft.AspNetCore.Mvc;
+using ODTUDersSecim.Models;
+using System.Net;
+
+namespace ODTUDersSecim.Controllers
+{
+    [Route("api/[controller]/[action]/")]
+    [ApiController]
+    public class SectionDaysController : Controller
+    {
+        private readonly SectionDaysService _subjectSectionDaysService;
+
+        public SectionDaysController(SectionDaysService subjectsSectionDaysService)
+        {
+            _subjectSectionDaysService = subjectsSectionDaysService;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(List<SectionDays>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAllSubjectSectionDays()
+        {
+            var subjectSections = await _subjectSectionDaysService.GetAllSubjectSectionDays();
+            return Ok(subjectSections);
+        }
+
+        [HttpGet("{sectionCode}")]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]
+
+        public async Task<ActionResult> GetSubjectsSectionDays(int sectionCode)
+        {
+
+            var subjectSections = await _subjectSectionDaysService.GetSubjectsSectionDays(sectionCode);
+
+            if (subjectSections == null) return NotFound();
+
+            return Ok(subjectSections);
+        }
+
+
+        [HttpGet("{subjectSectionDaysId}")]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetSubjectSectionDay(int subjectSectionDaysId)
+        {
+            var subjectSection = await _subjectSectionDaysService.GetSubjectSectionDay(subjectSectionDaysId);
+            if (subjectSection == null)
+            {
+                return NotFound();
+            }
+            return Ok(subjectSection);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> AddSubjectSection(SectionDays subjectSectionDays)
+        {
+            var addedSubjectSection = await _subjectSectionDaysService.AddSubjectSectionDays(subjectSectionDays);
+            return Ok(addedSubjectSection);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> UpdateSubjectSection(SectionDays subjectSectionDays)
+        {
+            var updatedSubjectSection = await _subjectSectionDaysService.UpdateSubjectSectionDays(subjectSectionDays);
+            if (updatedSubjectSection == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedSubjectSection);
+        }
+
+        [HttpDelete("{subjectSectionId}")]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> DeleteSubjectSection(int subjectSectionId)
+        {
+            var deletedSubjectSection = await _subjectSectionDaysService.DeleteSubjectSectionDays(subjectSectionId);
+            if (deletedSubjectSection == null)
+            {
+                return NotFound();
+            }
+            return Ok(deletedSubjectSection);
+        }
+    }
+}
+

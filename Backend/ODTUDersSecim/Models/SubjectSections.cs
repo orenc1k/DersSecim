@@ -34,7 +34,7 @@ namespace ODTUDersSecim.Models
         public int SubjectCode { get; set; }
         public Subjects? Subjects { get; set; }
 
-
+        public ICollection<SectionDays>? SectionDays { get; set; }
 
     }
 }

@@ -27,10 +27,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<CengDersSecimService>();
 builder.Services.AddScoped<DepartmentService>();
 builder.Services.AddScoped<SubjectsService>();
 builder.Services.AddScoped<SubjectSectionsService>();
+builder.Services.AddScoped<SectionDaysService>();
 
 builder.Services.AddSwaggerGen();
 
