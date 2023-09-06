@@ -29,6 +29,7 @@ const ScheduleTable = () => {
   const [takenElectiveCourses, setTakenElectiveCourses] = useState([]);
   const [mustCourses, setMustCourses] = useState([]);
   const [test, setTest] = useState([]);
+  const [deptCode, setDeptCode] = useState(0);
 
   useEffect(() => {
     if (selectedDepartmentFile) {
@@ -48,7 +49,8 @@ const ScheduleTable = () => {
       .catch((error) => {
         console.error("An error occurred:", error);
       });
-  }, [selectedDepartmentFile, selectedUserDepartmentFile, selectedSemester]);
+      setDeptCode(deptCode);
+  }, [selectedDepartmentFile, selectedUserDepartmentFile, selectedSemester,deptCode]);
 
   return (
     <div style={{ display: "flex", alignItems: "flex-start" }}>
@@ -68,6 +70,8 @@ const ScheduleTable = () => {
               setUserDepartment={setUserDepartment}
               setSelectedUserDepartmentFile={setSelectedUserDepartmentFile}
               test={test}
+              deptCode={deptCode}
+              setDeptCode={setDeptCode}
             />
 
             <Semester
@@ -80,6 +84,7 @@ const ScheduleTable = () => {
             selectedSemester={selectedSemester}
             userDepartment={userDepartment}
             setMustCourses={setMustCourses}
+            deptCode={deptCode}
           />
           <div style={{ marginTop: "30px" }}>
             <div style={{ marginLeft: "100px" }}> Must Courses
@@ -121,7 +126,7 @@ const ScheduleTable = () => {
             setShowAdvancedSettings={setShowAdvancedSettings}
           />
         </div>
-      </div>
+      </div>  
     </div>
   );
 };

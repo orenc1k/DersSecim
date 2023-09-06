@@ -81,7 +81,7 @@ namespace ODTUDersSecim.Controllers
         [HttpDelete("{mustCourseId}")]
         [ProducesResponseType(typeof(MustCourses), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(MustCourses), (int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> DeleteDepartment(int mustCourseId)
+        public async Task<IActionResult> DeleteMustCourse(int mustCourseId)
         {
             var deletedSubject = await _mustCourseService.DeleteMustCourse(mustCourseId);
             if (deletedSubject == null)

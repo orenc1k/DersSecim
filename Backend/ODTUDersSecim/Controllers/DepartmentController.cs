@@ -43,6 +43,19 @@ namespace ODTUDersSecim.Controllers
             return Ok(subject);
         }
 
+       
+        [HttpGet("{deptName}")]
+        [ProducesResponseType(typeof(Departments), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Departments), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult?> GetDepartmentCode(string deptName)
+        {
+            var subject = await _departmentService.GetDepartmentCode(deptName);
+            if (subject == null)
+            {
+                return NotFound();
+            }
+            return Ok(subject);
+        }
         [HttpPost]
         [ProducesResponseType(typeof(Departments), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Departments), (int)HttpStatusCode.NotFound)]

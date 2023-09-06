@@ -21,3 +21,25 @@ export const GetDepartmentsAsync = async () => {
     return [];
   }
 };
+
+
+export const GetDepartmentCode = async (deptName) => {
+    try {
+       return  await axios.get("https://localhost:7031/api/Department/GetDepartmentCode/"+ deptName);
+    }
+
+    catch (error){
+        console.error("An error occurred:", error);
+    }
+};
+
+
+export const GetSemesterMustCourses = async (deptCode, semester) => {
+    try {
+       return  await axios.get("https://localhost:7031/api/MustCourse/GetSemesterMustCourses/"+ deptCode + "/" + semester);
+    }
+
+    catch (error){
+        console.error("An error occurred:", error);
+    }
+};

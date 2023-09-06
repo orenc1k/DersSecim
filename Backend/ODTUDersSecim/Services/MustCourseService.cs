@@ -27,7 +27,8 @@ namespace ODTUDersSecim.Services
                 {
                     CourseName = x.CourseName,
                     Semester = x.Semester,
-                    DeptCode = x.DeptCode
+                    DeptCode = x.DeptCode,
+                    SubjectCode= x.SubjectCode
                 })
                 .ToListAsync();
             return mustCoursesDTO;
@@ -46,7 +47,8 @@ namespace ODTUDersSecim.Services
                                                                                   {
                                                                                       Semester = x.Semester,
                                                                                       CourseName = x.CourseName,
-                                                                                      DeptCode = x.DeptCode
+                                                                                      DeptCode = x.DeptCode,
+                                                                                      SubjectCode= x.SubjectCode
                                                                                   }).ToListAsync();
 
             return mustCourses;
@@ -89,6 +91,7 @@ namespace ODTUDersSecim.Services
                     CourseName = mustCourseDTO.CourseName,
                     DeptCode = mustCourseDTO.DeptCode,
                     Semester = mustCourseDTO.Semester,
+                    SubjectCode= mustCourseDTO.SubjectCode
                 };
                 await odtuDersSecimDbContext.MustCourses.AddAsync(addedMustCourse);
                 await odtuDersSecimDbContext.SaveChangesAsync();
@@ -116,6 +119,7 @@ namespace ODTUDersSecim.Services
                     updatedMustCourse.CourseName = mustCourse.CourseName;
                     updatedMustCourse.Semester = mustCourse.Semester;
                     updatedMustCourse.Departments = mustCourse.Departments;
+                    updatedMustCourse.SubjectCode = mustCourse.SubjectCode;
 
                     odtuDersSecimDbContext.MustCourses.Update(updatedMustCourse);
                     await odtuDersSecimDbContext.SaveChangesAsync();

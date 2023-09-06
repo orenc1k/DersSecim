@@ -1,5 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
 import { Select, MenuItem, FormControl } from "@mui/material";
+import { GetDepartmentCode } from "./Crud";
 
 const formContainerStyle = {
   display: "flex",
@@ -17,11 +19,30 @@ const UserDepartment = ({
   setUserDepartment,
   setSelectedUserDepartmentFile,
   test,
+  deptCode,
+  setDeptCode,
 }) => {
   const handleUserDepartmentChange = (selectedDepartment) => {
     setUserDepartment(selectedDepartment);
     setSelectedUserDepartmentFile(`${selectedDepartment.replace(/\s+/g, "")}`);
+    handleDepartmentCode(selectedDepartment);
   };
+
+  const handleDepartmentCode = async (userDepartment) => {
+    try {
+
+      const departmentCode = await GetDepartmentCode(userDepartment);
+      setDeptCode(departmentCode.data);
+      console.log("departmentCode", deptCode);
+    } catch (error) {
+      // Handle any errors that may occur during the asynchronous operation
+      console.error('Error fetching department code:', error);
+    }
+  };
+  useEffect(() => {
+    console.log("departmentCode", deptCode);
+  }, [deptCode]);
+
   return (
     <div>
       <FormControl sx={{ m: -0.5, minWidth: 100 }} size="small">

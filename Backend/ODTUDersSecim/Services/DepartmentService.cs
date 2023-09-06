@@ -31,6 +31,15 @@ namespace ODTUDersSecim.Services
             return department;
         }
 
+        public async Task<int?>GetDepartmentCode(string deptName)
+        {
+            var department = await odtuDersSecimDbContext.Departments.SingleOrDefaultAsync(x => x.DeptShortName == deptName);
+            if (department == null)
+            {
+                return null;
+            }
+            return department.DeptCode;
+        }
         public async Task<IslemSonuc<Departments>> DeleteDepartment(int deptCode)
         {
             try
