@@ -44,10 +44,10 @@ namespace ODTUDersSecim.Controllers
             return Ok(subject);
         }
 
-        [HttpGet("{semester},{deptCode}")] 
-        [ProducesResponseType(typeof(MustCourses), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(MustCourses), (int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetSemesterMustCourses(int semester, int deptCode)
+        [HttpGet("{deptCode}/{semester}")] 
+        [ProducesResponseType(typeof(MustCourseDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(MustCourseDTO), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetSemesterMustCourses(int deptCode, int semester)
         {
             var subject = await _mustCourseService.GetSemesterMustCourses(semester,deptCode);
             if (subject == null)
