@@ -8,7 +8,7 @@ namespace ODTUDersSecim.Models
 
         private IConfiguration configuration;
 
-        public ODTUDersSecimDBContext(DbContextOptions options, IConfiguration configuration) : base(options) 
+        public ODTUDersSecimDBContext(DbContextOptions<ODTUDersSecimDBContext> options, IConfiguration configuration) : base(options) 
         {
             this.configuration = configuration;
         }

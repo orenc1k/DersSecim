@@ -21,12 +21,12 @@ namespace ODTUDersSecim.Models
 
 
         [ForeignKey("SectionId")]
-        public int SectionId { get; set; }
-        public SubjectSections? SubjectSections { get; set; }
+        public int? SectionId { get; set; }
+        public virtual SubjectSections? SubjectSections { get; set; }
 
         [ForeignKey("SubjectCode")]
-        public int SubjectCode { get; set; }
-        public Subjects? Subjects { get; set; }
+        public int? SubjectCode { get; set; }
+        public virtual Subjects? Subjects { get; set; }
     }
 }
 

@@ -34,12 +34,12 @@ const ScheduleTable = () => {
   // ...
   return ( 
     <div style={{ display: "flex" }}>
-      <div style={{ overflowX: "auto", width: "65%" }}>
+      <div style={{ overflowX: "auto", width: "100%" }}>
         <table style={{ width: "100%", tableLayout: "fixed", // Distribute extra space between elements 
         }}>
           <thead>
             <tr>
-              <th style={{ width: "15%" }}>Time</th>
+              <th style={{ width: "10%" }}>Time</th>
               {daysOfWeek.map((day) => (
                 <th key={day}>{day}</th>
               ))}
@@ -48,7 +48,7 @@ const ScheduleTable = () => {
           <tbody>
             {timeSlots.map((time) => (
               <tr key={time}>
-                <td style={{ textAlign: "center", justifyContent: "space-between", }}>{time}</td>
+                <td style={{ textAlign: "center" }}>{time}</td>
                 {daysOfWeek.map((day) => (
                   <td
                     key={day}

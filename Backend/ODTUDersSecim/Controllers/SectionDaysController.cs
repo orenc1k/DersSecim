@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ODTUDersSecim.Services;
+using ODTUDersSecim.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using ODTUDersSecim.Models;
 using System.Net;
@@ -61,9 +62,9 @@ namespace ODTUDersSecim.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> AddSubjectSection(SectionDays subjectSectionDays)
+        public async Task<IActionResult> AddSubjectSection(SectionDaysDTO subjectSectionDaysDTO)
         {
-            var addedSubjectSection = await _subjectSectionDaysService.AddSubjectSectionDays(subjectSectionDays);
+            var addedSubjectSection = await _subjectSectionDaysService.AddSubjectSectionDays(subjectSectionDaysDTO);
             return Ok(addedSubjectSection);
         }
 

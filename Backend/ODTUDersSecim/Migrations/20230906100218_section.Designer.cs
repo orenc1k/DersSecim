@@ -12,8 +12,8 @@ using ODTUDersSecim.Models;
 namespace ODTUDersSecim.Migrations
 {
     [DbContext(typeof(ODTUDersSecimDBContext))]
-    [Migration("20230904083145_initial")]
-    partial class initial
+    [Migration("20230906100218_section")]
+    partial class section
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,7 +129,7 @@ namespace ODTUDersSecim.Migrations
                     b.Property<string>("StartGrade")
                         .HasColumnType("text");
 
-                    b.Property<int>("SubjectCode")
+                    b.Property<int?>("SubjectCode")
                         .HasColumnType("integer");
 
                     b.Property<int?>("SubjectsSubjectCode")
@@ -170,11 +170,11 @@ namespace ODTUDersSecim.Migrations
             modelBuilder.Entity("ODTUDersSecim.Models.SectionDays", b =>
                 {
                     b.HasOne("ODTUDersSecim.Models.SubjectSections", "SubjectSections")
-                        .WithMany("SectionDays")
+                        .WithMany()
                         .HasForeignKey("SubjectSectionsSectionId");
 
                     b.HasOne("ODTUDersSecim.Models.Subjects", "Subjects")
-                        .WithMany("SectionDays")
+                        .WithMany()
                         .HasForeignKey("SubjectsSubjectCode");
 
                     b.Navigation("SubjectSections");
@@ -185,22 +185,10 @@ namespace ODTUDersSecim.Migrations
             modelBuilder.Entity("ODTUDersSecim.Models.SubjectSections", b =>
                 {
                     b.HasOne("ODTUDersSecim.Models.Subjects", "Subjects")
-                        .WithMany("SubjectSections")
+                        .WithMany()
                         .HasForeignKey("SubjectsSubjectCode");
 
                     b.Navigation("Subjects");
-                });
-
-            modelBuilder.Entity("ODTUDersSecim.Models.SubjectSections", b =>
-                {
-                    b.Navigation("SectionDays");
-                });
-
-            modelBuilder.Entity("ODTUDersSecim.Models.Subjects", b =>
-                {
-                    b.Navigation("SectionDays");
-
-                    b.Navigation("SubjectSections");
                 });
 #pragma warning restore 612, 618
         }

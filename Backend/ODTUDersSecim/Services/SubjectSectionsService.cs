@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using ODTUDersSecim.Helpers;
+using ODTUDersSecim.DTOs;
 using Microsoft.EntityFrameworkCore;
 using ODTUDersSecim.Models;
 using System.Xml.Linq;
@@ -59,18 +60,32 @@ namespace ODTUDersSecim.Services
             }
         }
 
-        public async Task<IslemSonuc<SubjectSections>> AddSubjectSection(SubjectSections subjectSection)
+        public async Task<IslemSonuc<SubjectSectionsDTO>> AddSubjectSection(SubjectSectionsDTO subjectSectionDTO)
         {
             try
             {
-                var checkSubject = await SubjectSectionCheckAsync(subjectSection);
+                var checkSubject = await SubjectSectionCheckAsync(subjectSectionDTO);
                 if (checkSubject)
                 {
-                    return new IslemSonuc<SubjectSections>().Basarisiz("Section tabloda var");
+                    return new IslemSonuc<SubjectSectionsDTO>().Basarisiz("Section tabloda var");
                 }
+                var subjectSection = new SubjectSections
+                {
+                    SectionCode = subjectSectionDTO.SectionCode,
+                    GivenDept = subjectSectionDTO.GivenDept,
+                    StartChar = subjectSectionDTO.StartChar,
+                    EndChar = subjectSectionDTO.EndChar,
+                    MinCumGpa = subjectSectionDTO.MinCumGpa,
+                    MaxCumGpa = subjectSectionDTO.MaxCumGpa,
+                    MinYear = subjectSectionDTO.MinYear,
+                    MaxYear = subjectSectionDTO.MaxYear,
+                    StartGrade = subjectSectionDTO.StartGrade,
+                    EndGrade = subjectSectionDTO.EndGrade,
+                    SubjectCode = subjectSectionDTO.SubjectCode
+                };
                 await odtuDersSecimDbContext.SubjectSections.AddAsync(subjectSection);
                 await odtuDersSecimDbContext.SaveChangesAsync();
-                var islemSonuc = new IslemSonuc<SubjectSections>().Basarili(subjectSection);
+                var islemSonuc = new IslemSonuc<SubjectSectionsDTO>().Basarili(subjectSectionDTO);
                 return islemSonuc;
             }
 
@@ -85,7 +100,7 @@ namespace ODTUDersSecim.Services
                     Console.WriteLine("Inner Exception Stack Trace: " + ex.InnerException.StackTrace);
                 }
 
-                return new IslemSonuc<SubjectSections>().Basarisiz("Ekleme İşleminde Hata Oluştu!");
+                return new IslemSonuc<SubjectSectionsDTO>().Basarisiz("Ekleme İşleminde Hata Oluştu!");
             }
 
         }
@@ -125,7 +140,7 @@ namespace ODTUDersSecim.Services
 
         }
 
-        public async Task<bool> SubjectSectionCheckAsync(SubjectSections subjectSection)
+        public async Task<bool> SubjectSectionCheckAsync(SubjectSectionsDTO subjectSection)
         {
             var checkSubject = await odtuDersSecimDbContext.SubjectSections.Where(x => x.SubjectCode == subjectSection.SubjectCode).AnyAsync(x =>
             (

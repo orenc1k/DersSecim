@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ODTUDersSecim.Models;
 using ODTUDersSecim.Helpers;
+using ODTUDersSecim.DTOs;
 
 namespace ODTUDersSecim.Services
 {
@@ -58,18 +59,29 @@ namespace ODTUDersSecim.Services
             }
         }
 
-        public async Task<IslemSonuc<SectionDays>> AddSubjectSectionDays(SectionDays subjectSectionDays)
+        public async Task<IslemSonuc<SectionDaysDTO>> AddSubjectSectionDays(SectionDaysDTO subjectSectionDaysDTO)
         {
             try
             {
-                var checkSubject = await SubjectSectionDaysCheckAsync(subjectSectionDays);
+                var checkSubject = await SubjectSectionDaysCheckAsync(subjectSectionDaysDTO);
                 if (checkSubject)
                 {
-                    return new IslemSonuc<SectionDays>().Basarisiz("Section tabloda var");
+                    return new IslemSonuc<SectionDaysDTO>().Basarisiz("Section tabloda var");
                 }
-                await odtuDersSecimDbContext.SectionDays.AddAsync(subjectSectionDays);
+                var sectionDay = new SectionDays
+                {
+                    Day1 = subjectSectionDaysDTO.Day1,
+                    Day2 = subjectSectionDaysDTO.Day2,
+                    Day3 = subjectSectionDaysDTO.Day3,
+                    Time1 = subjectSectionDaysDTO.Time1,
+                    Time2 = subjectSectionDaysDTO.Time2,
+                    Time3 = subjectSectionDaysDTO.Time3,
+                    SectionId = subjectSectionDaysDTO.SectionId,
+                    SubjectCode = subjectSectionDaysDTO.SubjectCode
+                };
+                await odtuDersSecimDbContext.SectionDays.AddAsync(sectionDay);
                 await odtuDersSecimDbContext.SaveChangesAsync();
-                var islemSonuc = new IslemSonuc<SectionDays>().Basarili(subjectSectionDays);
+                var islemSonuc = new IslemSonuc<SectionDaysDTO>().Basarili(subjectSectionDaysDTO);
                 return islemSonuc;
             }
 
@@ -84,7 +96,7 @@ namespace ODTUDersSecim.Services
                     Console.WriteLine("Inner Exception Stack Trace: " + ex.InnerException.StackTrace);
                 }
 
-                return new IslemSonuc<SectionDays>().Basarisiz("Ekleme İşleminde Hata Oluştu!");
+                return new IslemSonuc<SectionDaysDTO>().Basarisiz("Ekleme İşleminde Hata Oluştu!");
             }
 
         }
@@ -119,19 +131,19 @@ namespace ODTUDersSecim.Services
             }
 
         }
-        public async Task<bool> SubjectSectionDaysCheckAsync(SectionDays subjectSectionDays)
+        public async Task<bool> SubjectSectionDaysCheckAsync(SectionDaysDTO subjectSectionDaysDTO)
         {
-            var checkSubjectDays = await odtuDersSecimDbContext.SectionDays.Where(x => x.SubjectCode == subjectSectionDays.SubjectCode).AnyAsync(x =>
-            ( x.SectionId == subjectSectionDays.SectionId &&
-              x.Day1 == subjectSectionDays.Day1 &&
-              x.Day2 == subjectSectionDays.Day2 &&
-              x.Day3 == subjectSectionDays.Day3 &&
-              x.Time1 == subjectSectionDays.Time1 &&
-              x.Time2 == subjectSectionDays.Time2 &&
-              x.Time3 == subjectSectionDays.Time3 
+            var checkSubjectDays = await odtuDersSecimDbContext.SectionDays.Where(x => x.SubjectCode == subjectSectionDaysDTO.SubjectCode).AnyAsync(x =>
+            ( x.SectionId == subjectSectionDaysDTO.SectionId &&
+              x.Day1 == subjectSectionDaysDTO.Day1 &&
+              x.Day2 == subjectSectionDaysDTO.Day2 &&
+              x.Day3 == subjectSectionDaysDTO.Day3 &&
+              x.Time1 == subjectSectionDaysDTO.Time1 &&
+              x.Time2 == subjectSectionDaysDTO.Time2 &&
+              x.Time3 == subjectSectionDaysDTO.Time3 
                ));
 
-            return checkSubjectDays;
+            return checkSubjectDays;       /// Farklı ders aynı saatte olması sıkıntısı var
         }
 
 

@@ -4,6 +4,7 @@ using ODTUDersSecim.Helpers;
 using Microsoft.EntityFrameworkCore;
 using ODTUDersSecim.Models;
 using System.Xml.Linq;
+using ODTUDersSecim.DTOs;
 
 
 namespace ODTUDersSecim.Services

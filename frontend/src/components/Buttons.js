@@ -31,7 +31,7 @@ export const handleSchedule = () => {
 };
 const Buttons = ({ selectedSemester, userDepartment, setMustCourses }) => {
   return (
-    <div style={{ display: "flex", marginBottom: "10px" }}>
+    <div style={{ display: "flex", marginTop: "20px",marginLeft:"100px" }}>
       <Button
         startIcon={<AddBoxIcon />}
         variant="contained"
@@ -41,6 +41,7 @@ const Buttons = ({ selectedSemester, userDepartment, setMustCourses }) => {
         Add Must Course
       </Button>
       <Button
+        style={{ marginLeft: "50px" }}
         startIcon={<EventAvailableIcon />}
         variant="contained"
         onClick={handleSchedule}

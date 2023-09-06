@@ -59,7 +59,7 @@ const ScheduleTable = () => {
       </div>
       <div style={{ flex: 1, marginLeft: "20px" }}>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", marginBottom: "10px" }}>
+          <div style={{ display: "flex", marginTop: "30px" }}>
             <Surname surname={surname} setSurname={setSurname} />
             <CGPA cgpa={cgpa} setCGPA={setCGPA} />
 
@@ -81,19 +81,23 @@ const ScheduleTable = () => {
             userDepartment={userDepartment}
             setMustCourses={setMustCourses}
           />
-          <div>
-            <h3> Must Courses</h3>
+          <div style={{ marginTop: "30px" }}>
+            <div style={{ marginLeft: "100px" }}> Must Courses
             <ul>
               {mustCourses.map((course) => (
                 <li>{course}</li>
               ))}
             </ul>
-            <h3 style={{marginLeft:"250px"}}> Taken Elective Courses</h3>
-            <ul>
-              {takenElectiveCourses.map((course) => (
-                <li>{course}</li>
-              ))}
-            </ul>
+            <div style={{ marginLeft: "250px" }}>
+              {" "}
+              <div style={{ fontWeight: "bold",fontSize:"20px" }}> Taken Elective Courses</div>
+              <ul>
+                {takenElectiveCourses.map((course) => (
+                  <li>{course}</li>
+                ))}
+              </ul>
+            </div>
+            </div>
           </div>
           <div style={{ display: "flex", marginBottom: "10px" }}>
             <Departments
