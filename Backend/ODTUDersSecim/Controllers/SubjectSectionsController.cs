@@ -22,9 +22,9 @@ namespace ODTUDersSecim.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(SubjectSections), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(SubjectSections), (int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(List<SubjectSections>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SubjectSectionsDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SubjectSectionsDTO), (int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(List<SubjectSectionsDTO>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllSubjectSections()
         {
             var subjectSections = await _subjectSectionsService.GetAllSubjectSections();

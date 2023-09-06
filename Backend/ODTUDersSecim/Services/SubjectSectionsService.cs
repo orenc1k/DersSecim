@@ -19,10 +19,25 @@ namespace ODTUDersSecim.Services
             this.odtuDersSecimDbContext = dBContext;
         }
 
-        public async Task<List<SubjectSections>> GetAllSubjectSections()
+        public async Task<List<SubjectSectionsDTO>> GetAllSubjectSections()
         {
+            var subjectAllSections = await odtuDersSecimDbContext.SubjectSections
+                .Select(x => new SubjectSectionsDTO
+                {
+                    SectionCode = x.SectionCode,
+                    GivenDept = x.GivenDept,
+                    StartChar = x.StartChar,
+                    EndChar = x.EndChar,
+                    MinCumGpa = x.MinCumGpa,
+                    MaxCumGpa = x.MaxCumGpa,
+                    MinYear = x.MinYear,
+                    MaxYear = x.MaxYear,
+                    StartGrade = x.StartGrade,
+                    EndGrade = x.EndGrade,
+                    SubjectCode = x.SubjectCode,
+                })
+                .ToListAsync();
 
-            var subjectAllSections = await odtuDersSecimDbContext.SubjectSections.ToListAsync();
             return subjectAllSections;
         }
 
