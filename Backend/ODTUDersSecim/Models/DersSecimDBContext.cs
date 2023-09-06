@@ -17,6 +17,7 @@ namespace ODTUDersSecim.Models
         public DbSet<Subjects> Subjects { get; set; }
         public DbSet<SubjectSections> SubjectSections { get; set; }
         public DbSet<SectionDays> SectionDays { get; set; }
+        public DbSet<MustCourses> MustCourses { get; set; }
     }
 }
 
