@@ -7,6 +7,7 @@ using ODTUDersSecim.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using ODTUDersSecim.Models;
 using System.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace ODTUDersSecim.Controllers
 {
@@ -15,10 +16,12 @@ namespace ODTUDersSecim.Controllers
     public class SubjectSectionsController : Controller
     {
         private readonly SubjectSectionsService _subjectSectionsService;
+        private readonly ODTUDersSecimDBContext _oDTUDersSecimDBContext;
 
-        public SubjectSectionsController(SubjectSectionsService subjectsSectionService)
+        public SubjectSectionsController(SubjectSectionsService subjectsSectionService, ODTUDersSecimDBContext oDTUDersSecimDBContext)
         {
             _subjectSectionsService = subjectsSectionService;
+            _oDTUDersSecimDBContext = oDTUDersSecimDBContext;
         }
 
         [HttpGet]
@@ -57,6 +60,24 @@ namespace ODTUDersSecim.Controllers
                 return NotFound();
             }
             return Ok(subjectSection);
+        }
+
+
+        [HttpGet("{subjectCode}")]
+        public async Task<ActionResult<List<SectionDays>>> GetSectionDays(int subjectCode, float? cumGPA, string? surname, string? courseGrade)
+        {
+            try
+            {
+               var matchingDays= await _subjectSectionsService.GetSectionDays(subjectCode, cumGPA, surname, courseGrade);
+
+                return Ok(matchingDays);
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here
+                Console.WriteLine("Error: " + ex.Message);
+                return BadRequest("An error occurred while fetching section days.");
+            }
         }
 
         [HttpPost]

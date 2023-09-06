@@ -53,6 +53,73 @@ namespace ODTUDersSecim.Services
             return subjectSection;
         }
 
+        public bool GradeChecker(string? courseGrade, string? startGrade, string? endGrade)
+        {
+            string[] gradeArray = { "AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF", "NA" };
+
+            if (startGrade== "Herkes alabilir")
+            {
+                return true;
+            }
+            else if (courseGrade == "Kaldi" && startGrade == "Kaldi")
+            {
+                return true;
+            }
+
+            else if ((courseGrade == "FF" || courseGrade == "FD" || courseGrade == "NA") && startGrade == "Hic almayanlar veya Basarisizlar (FD ve alti)")
+            {
+                return true;
+            }
+
+            else if (courseGrade != null && startGrade != null && endGrade != null)
+            {
+                int courseGradeIndex = Array.IndexOf(gradeArray, courseGrade);
+                int startGradeIndex = Array.IndexOf(gradeArray, startGrade);
+                int endGradeIndex = Array.IndexOf(gradeArray, endGrade);
+
+                if (courseGradeIndex >= startGradeIndex && courseGradeIndex <= endGradeIndex)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public async Task<List<SectionDays>> GetSectionDays(int subjectCode, float? cumGPA, string? surname, string? courseGrade)
+        {
+            try
+            {
+                var matchingDays=new List<SectionDays>();
+
+                var matchingSections = odtuDersSecimDbContext.SubjectSections
+                    .Where(x => x.SubjectCode == subjectCode)
+                    .AsEnumerable() // Convert to client-side evaluation
+                    .Where(x =>
+                        (cumGPA == null || (cumGPA >= x.MinCumGpa && cumGPA <= x.MaxCumGpa)) &&
+                        (surname == null || (surname.CompareTo(x.StartChar) >= 0 && surname.CompareTo(x.EndChar) <= 0)) &&
+                        (courseGrade == null || GradeChecker(courseGrade, x.StartGrade, x.EndGrade)))
+                    .ToList();
+
+                foreach (var matchingSection in matchingSections)
+                {   
+                     var matchingDay = await odtuDersSecimDbContext.SectionDays.Where(x => x.SubjectCode == matchingSection.SubjectCode &&
+                                                                        x.SectionId == matchingSection.SectionCode).FirstOrDefaultAsync();
+                    if (matchingDay != null)
+                    {   if (!( matchingDays.Where(x=>x.SectionId == matchingDay.SectionId).Any()))
+                                matchingDays.Add(matchingDay);
+                    }
+                    
+                }
+                return matchingDays;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions here
+                Console.WriteLine("Error: " + ex.Message);
+                return new List<SectionDays>(); // Return an empty list or handle the error accordingly
+            }
+        }
+
         public async Task<IslemSonuc<SubjectSections>> DeleteSubjectSection(int sectionId)
         {
             try
