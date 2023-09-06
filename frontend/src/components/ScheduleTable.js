@@ -82,7 +82,6 @@ const ScheduleTable = () => {
 
           <Buttons
             selectedSemester={selectedSemester}
-            userDepartment={userDepartment}
             setMustCourses={setMustCourses}
             deptCode={deptCode}
           />
