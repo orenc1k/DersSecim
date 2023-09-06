@@ -63,7 +63,7 @@ const courseData = ({ semester }) => {
         return firstSemester;
     }
 
-    if (semester === 2) {
+    if (semester === '2') {
         const secondSemester: Course[] = [
             {
                 code: "5720172",
@@ -109,6 +109,8 @@ const courseData = ({ semester }) => {
 
         return secondSemester;
     }
+
+    
 
     // Add other semesters here
 };
