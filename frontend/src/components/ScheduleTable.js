@@ -30,7 +30,27 @@ const ScheduleTable = () => {
   const [mustCourses, setMustCourses] = useState([]);
   const [test, setTest] = useState([]);
   const [deptCode, setDeptCode] = useState(0);
+  const [scheduleTableUpdated, setScheduleTableUpdated] = useState(false);
+  const [schedule, setSchedule] = useState({
+    // Define your schedule data here
+    "8:40-9:30": {  },
+    "9:40-10:30": {  },
+    "10:40-11:30": {  },
+    "11:40-12:30": {  },
+    "12:40-13:30": {  },
+    "13:40-14:30": {  },
+    "14:40-15:30": {  },
+    "15:40-16:30": {  },
+    "16:40-17:30": {  },
+    "17:40-18:30": {  },
+    "18:40-19:30": {  },
+    "19:40-20:30": {  },
 
+
+    // Add more time slots and data as needed
+
+  } 
+  );
   useEffect(() => {
     if (selectedDepartmentFile) {
       // Load the selected department's subject file
@@ -50,13 +70,21 @@ const ScheduleTable = () => {
         console.error("An error occurred:", error);
       });
       setDeptCode(deptCode);
-  }, [selectedDepartmentFile, selectedUserDepartmentFile, selectedSemester,deptCode]);
+      setScheduleTableUpdated(false);
+  }, [selectedDepartmentFile, selectedUserDepartmentFile, selectedSemester,deptCode,scheduleTableUpdated]);
 
   return (
     <div style={{ display: "flex", alignItems: "flex-start" }}>
       <div style={{ flex: 1 }}>
         <h3>
-          <Schedule />
+          <Schedule 
+           deptCode={deptCode}
+           surname={surname}
+           cgpa={cgpa}
+           setScheduleTableUpdated={setScheduleTableUpdated}
+           schedule={schedule}
+          setSchedule={setSchedule}
+           />
         </h3>
       </div>
       <div style={{ flex: 1, marginLeft: "20px" }}>
