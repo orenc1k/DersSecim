@@ -66,3 +66,8 @@ export const GetSectionDays = async (courseCode,cumGPA,surname, courseGrade) => 
         console.error("An error occurred:", error);
     }
 }
+
+
+export const GetAllCoursesODTU = () => {
+  return axios.get("https://localhost:7031/api/Subjects/GetSubjects");
+}

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { GetDepartmentsAsync } from "./Crud";
+import React, { useState, useEffect, useRef } from "react";
+import { GetDepartmentsAsync,GetAllCoursesODTU,GetDepartment } from "./Crud";
 import Schedule from "./Schedule.tsx";
 import Surname from "./Surname";
 import CGPA from "./CGPA";
@@ -27,8 +27,11 @@ const ScheduleTable = () => {
   const [takenElectiveCourses, setTakenElectiveCourses] = useState([]);
   const [mustCourses, setMustCourses] = useState([]);
   const [test, setTest] = useState([]);
-  const [deptCode, setDeptCode] = useState(0);
+  const [deptCode, setDeptCode] = useState();
   const [scheduleTableUpdated, setScheduleTableUpdated] = useState(false);
+  const [allCourses,setAllCourses]= useState([]);
+  const fetchAllCoursesCalled = useRef(false);
+
   const [schedule, setSchedule] = useState({
     "08:40-9:30": {},
     "09:40-10:30": {},
@@ -43,7 +46,13 @@ const ScheduleTable = () => {
     "18:40-19:30": {},
     "19:40-20:30": {},
   });
+
+
   useEffect(() => {
+    if (!fetchAllCoursesCalled.current) {
+      fetchAllCourses();
+      fetchAllCoursesCalled.current = true;
+    }
     if (selectedDepartmentFile) {
       import(`../Departments/${selectedDepartmentFile}.js`).then((module) => {
         setAvailableClasses(module.default);
@@ -65,7 +74,27 @@ const ScheduleTable = () => {
     selectedSemester,
     deptCode,
     scheduleTableUpdated,
+    fetchAllCoursesCalled,
   ]);
+
+
+  const fetchAllCourses = async () => {
+  
+  try {
+    const result = await GetAllCoursesODTU();
+    for (const subject of result.data) {
+      const deptResponse = await GetDepartment(parseInt(subject.subjectCode.toString().slice(0, 3)));
+      const deptName = deptResponse.data.deptShortName;
+      setAllCourses((prevCourses) => [
+        ...prevCourses,
+        `${deptName}${subject.subjectCode.toString().slice(4)}`,
+      ]);
+    }
+
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+  } 
+  };
 
   return (
     <div style={{ display: "flex", alignItems: "flex-start" }}>
@@ -151,7 +180,16 @@ const ScheduleTable = () => {
             showAdvancedSettings={showAdvancedSettings}
             setShowAdvancedSettings={setShowAdvancedSettings}
           />
-        </div>
+          <div style={{border:"2px solid gray",borderRadius:"100px"}}>
+          <h3 style={{marginLeft:"300px",fontSize:"20px",fontWeight:"bold",marginTop: "20px"}}>
+              AddedCourses
+            </h3>
+            </div>  
+{/*           <AddedCourses/>    
+ */}        </div>
+      </div>
+      <div>
+          {allCourses}
       </div>
     </div>
   );

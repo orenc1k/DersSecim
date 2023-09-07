@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import { Select, MenuItem, FormControl } from "@mui/material";
 import { GetDepartmentCode } from "./Crud";
 
@@ -38,9 +37,7 @@ const UserDepartment = ({
       console.error('Error fetching department code:', error);
     }
   };
-  useEffect(() => {
-    console.log("departmentCode", deptCode);
-  }, [deptCode]);
+
 
   return (
     <div>
