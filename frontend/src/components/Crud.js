@@ -22,7 +22,16 @@ export const GetDepartmentsAsync = async () => {
   }
 };
 
+export const GetDepartment = async (deptCode) => {
+  try {
+      const response = await axios.get("https://localhost:7031/api/Department/GetDepartment/"+ deptCode);
+      return response;
+  }
+  catch (error){
+      console.error("An error occurred:", error);
+  }
 
+}
 export const GetDepartmentCode = async (deptName) => {
     try {
        return  await axios.get("https://localhost:7031/api/Department/GetDepartmentCode/"+ deptName);
@@ -43,3 +52,20 @@ export const GetSemesterMustCourses = async (deptCode, semester) => {
         console.error("An error occurred:", error);
     }
 };
+
+export const GetSectionDays = async (courseCode,cumGPA,surname, courseGrade) => {
+    try {
+        const apiUrl = `https://localhost:7031/api/SubjectSections/GetSectionDays/
+        ${courseCode}?${cumGPA ? `cumGPA=${cumGPA}` : ''}
+        ${(cumGPA && surname) ? `&surname=${surname}` : (surname && !cumGPA) ? `surname=${surname}` : ''}
+        ${(courseGrade && (cumGPA || surname)) ? `&courseGrade=${courseGrade}` : (courseGrade && (!cumGPA && !surname)) ? `courseGrade=${courseGrade}` : ''}`;
+
+        // Make the GET request
+        const response = await axios.get(apiUrl);
+    
+        return response.data;
+    }
+    catch (error){
+        console.error("An error occurred:", error);
+    }
+}
