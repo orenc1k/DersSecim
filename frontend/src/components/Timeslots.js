@@ -11,7 +11,6 @@ const timeSlots = [
     "17:40-18:30",
     "18:40-19:30",
     "19:40-20:30",
-    // Add more time slots here if needed
   ];
 
   export default timeSlots;

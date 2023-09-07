@@ -3,17 +3,15 @@ import { Select, MenuItem, FormControl } from "@mui/material";
 
 const semesters = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
-
-
 const formContainerStyle = {
     display: "flex",
-    alignItems: "center", // Center elements vertically
+    alignItems: "center", 
     marginTop: "5px",
     };
 const labelStyle = {
     fontWeight: "bold",
     marginRight: "10px",
-    margin: "0 10px", // Add margin to both left and right sides of the label
+    margin: "0 10px", 
     };
     
 const Semester = ({
@@ -30,7 +28,6 @@ setSelectedSemester,
             onChange={(e) => setSelectedSemester(e.target.value)}
             style={{ marginLeft: "10px" }}
           >
-            {/* Options for the Semester Select */}
             <MenuItem value="">
               <em>None</em>
             </MenuItem>

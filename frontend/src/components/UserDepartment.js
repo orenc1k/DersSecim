@@ -5,13 +5,13 @@ import { GetDepartmentCode } from "./Crud";
 
 const formContainerStyle = {
   display: "flex",
-  alignItems: "center", // Center elements vertically
+  alignItems: "center",
   marginTop: "5px",
 };
 const labelStyle = {
   fontWeight: "bold",
   marginRight: "10px",
-  margin: "0 10px", // Add margin to both left and right sides of the label
+  margin: "0 10px", 
 };
 
 const UserDepartment = ({
@@ -35,7 +35,6 @@ const UserDepartment = ({
       setDeptCode(departmentCode.data);
       console.log("departmentCode", deptCode);
     } catch (error) {
-      // Handle any errors that may occur during the asynchronous operation
       console.error('Error fetching department code:', error);
     }
   };

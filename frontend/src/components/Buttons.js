@@ -7,32 +7,28 @@ import { GetSemesterMustCourses } from "./Crud";
 export const handleAddMustCourse = (
   selectedSemester,
   setMustCourses,
-  deptCode,
+  deptCode
 ) => {
-
   try {
-debugger;
- GetSemesterMustCourses(deptCode,selectedSemester).then((res) => {
-   const mustCourses = res.data.map((course) => course.courseName);
-   setMustCourses(mustCourses);
-  }
-    );
-    }
-  catch(error){
+    debugger;
+    GetSemesterMustCourses(deptCode, selectedSemester).then((res) => {
+      const mustCourses = res.data.map((course) => course.courseName);
+      setMustCourses(mustCourses);
+    });
+  } catch (error) {
     console.log(error);
   }
 };
-export const handleSchedule = () => {
-  // Implement your logic to generate the schedule here
-  // You can use the schedule state to get the user's selections
-};
-const Buttons = ({ selectedSemester, setMustCourses,deptCode }) => {
+export const handleSchedule = () => {};
+const Buttons = ({ selectedSemester, setMustCourses, deptCode }) => {
   return (
-    <div style={{ display: "flex", marginTop: "20px",marginLeft:"100px" }}>
+    <div style={{ display: "flex", marginTop: "20px", marginLeft: "100px" }}>
       <Button
         startIcon={<AddBoxIcon />}
         variant="contained"
-        onClick={() => handleAddMustCourse(selectedSemester, setMustCourses,deptCode)}
+        onClick={() =>
+          handleAddMustCourse(selectedSemester, setMustCourses, deptCode)
+        }
         style={{ backgroundColor: "orange", color: "white" }}
       >
         Add Must Course
