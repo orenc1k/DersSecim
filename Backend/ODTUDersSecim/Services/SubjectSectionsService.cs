@@ -96,7 +96,8 @@ namespace ODTUDersSecim.Services
                     .AsEnumerable() // Convert to client-side evaluation
                     .Where(x =>
                         (cumGPA == null || (cumGPA >= x.MinCumGpa && cumGPA <= x.MaxCumGpa)) &&
-                        (surname == null || (surname.CompareTo(x.StartChar) >= 0 && surname.CompareTo(x.EndChar) <= 0)) &&
+                        (surname == null ||(string.Compare(surname, x.StartChar, StringComparison.Ordinal) >= 0 &&
+                                            string.Compare(surname, x.EndChar, StringComparison.Ordinal) <= 0)) &&
                         (courseGrade == null || GradeChecker(courseGrade, x.StartGrade, x.EndGrade)))
                     .ToList();
 
