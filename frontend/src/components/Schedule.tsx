@@ -1,37 +1,76 @@
 import React, { useState } from "react";
 import daysOfWeek from "./DaysOfWeek"; // Import the constants
 import timeSlots from "./Timeslots"; // Import the constants
+import { GetSectionDays } from "./Crud";
+import { Button } from "@mui/material";
+import { GetDepartment } from "./Crud";
 
-const ScheduleTable = () => {
-  // Initialize the schedule state with your schedule data
-  const [schedule, setSchedule] = useState({
-    // Define your schedule data here
-    "8:40 - 9:30": {  },
-    "9:40 - 10:30": {  },
-    "10:40 - 11:30": {  },
-    "11:40 - 12:30": {  },
-    "12:40 - 13:30": {  },
-    "13:40 - 14:30": {  },
-    "14:40 - 15:30": {  },
-    "15:40 - 16:30": {  },
-    "16:40 - 17:30": {  },
-    "17:40 - 18:30": {  },
-    "18:40 - 19:30": {  },
-    "19:40 - 20:30": {  },
+const ScheduleTable =  ({deptCode, surname, cgpa,setScheduleTableUpdated,schedule,setSchedule}) => {
 
-
-    // Add more time slots and data as needed
-
-  });
-
-/*   const addCourse = () => {
-    // Add your logic here
+  const handleSchedule = async (time, day, courseCode) => {
     const updatedSchedule = { ...schedule };
-    updatedSchedule[timeSlots[0]][daysOfWeek[0]] = "AEE173";
-    setSchedule(updatedSchedule);
-  } */
+    const courseCodeString = courseCode.toString();
 
-  // ...
+const firstThreeDigits = courseCodeString.slice(0, 3);
+const fourthDigit = courseCodeString.charAt(3);
+const restOfCode = courseCodeString.slice(4);
+
+
+const deptName = await GetDepartment(firstThreeDigits).then((result) => {
+  return result?.data?.deptShortName;
+}
+);
+
+const timeIntervals= [] as String[];
+let currentTime = time.slice(0,5);
+let endTime = time.slice(6);
+endTime = `${endTime.slice(0,2)}:40`;
+
+ while (currentTime !== endTime) {
+  timeIntervals.push(currentTime+"-"+(parseInt(currentTime.slice(0,2))+1).toString()+":30");
+
+  const [hours, minutes] = currentTime.split(":").map(Number);
+  currentTime = `${hours + 1}:40`;
+  console.log("current time",currentTime);
+} 
+console.log("end time",endTime);
+timeIntervals.forEach((timeInterval) => {
+  console.log("time interval",timeInterval);
+}
+);
+
+timeIntervals.forEach((timeInterval) => {
+  updatedSchedule[timeInterval][day] = `${deptName}${restOfCode}`;
+});
+
+setSchedule(updatedSchedule); 
+setScheduleTableUpdated(true);
+  }
+
+  const handleScheduleGor = () => {
+    return console.log("schedule",schedule);
+  };
+
+  const handleGetSectionDays = async() => {
+    await GetSectionDays(5710111,2,'OR','CC').then((result) => {
+      result.forEach(async element => {
+        if (element.time1 && element.day1) {
+
+          await handleSchedule(element.time1, element.day1, element.subjectCode);
+        }
+      
+        if (element.time2 && element.day2) {
+          await handleSchedule(element.time2, element.day2, element.subjectCode);
+        }
+
+        if (element.time3 && element.day3) {
+          await handleSchedule(element.time3, element.day3, element.subjectCode);
+        }
+       });
+      console.log("result",result); 
+    }
+    )
+  }
   return ( 
     <div style={{ display: "flex" }}>
       <div style={{ overflowX: "auto", width: "100%" }}>
@@ -70,6 +109,15 @@ const ScheduleTable = () => {
           </tbody>
         </table>
       </div>
+      <Button onClick={()=> { handleGetSectionDays()
+    // Handle the result here
+    // This should display your data
+  }
+         }>
+        Call Subject API
+      </Button>
+
+      <Button onClick={()=>{handleScheduleGor()}}> Schedule gör</Button>
     </div>
   );
 };
