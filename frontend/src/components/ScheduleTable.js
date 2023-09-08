@@ -10,6 +10,7 @@ import Departments from "./Departments";
 import DepartmentsSubjects from "./DepartmentsSubjects";
 import AdvancedSettings from "./AdvancedSettings";
 import TakenElectiveCourses from "./TakenElectiveCourses";
+import AddedCourses from "./AddedCourses";
 
 const ScheduleTable = () => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
@@ -31,6 +32,7 @@ const ScheduleTable = () => {
   const [scheduleTableUpdated, setScheduleTableUpdated] = useState(false);
   const [allCourses,setAllCourses]= useState([]);
   const fetchAllCoursesCalled = useRef(false);
+  const [courseType, setCourseType] = useState("");
 
   const [schedule, setSchedule] = useState({
     "08:40-9:30": {},
@@ -185,8 +187,12 @@ const ScheduleTable = () => {
               AddedCourses
             </h3>
             </div>  
-{/*           <AddedCourses/>    
- */}        </div>
+          <AddedCourses
+          courses={allCourses}
+          courseType={courseType}
+          setCourseType={setCourseType}
+          />    
+     </div>
       </div>
       <div>
           {allCourses}

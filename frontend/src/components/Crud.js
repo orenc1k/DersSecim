@@ -71,3 +71,8 @@ export const GetSectionDays = async (courseCode,cumGPA,surname, courseGrade) => 
 export const GetAllCoursesODTU = () => {
   return axios.get("https://localhost:7031/api/Subjects/GetSubjects");
 }
+
+
+export const GetAllMustCoursesODTU = () => {
+  return axios.get("https://localhost:7031/api/MustCourse/GetAllMustCourses");
+}
