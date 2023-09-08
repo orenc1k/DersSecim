@@ -53,7 +53,7 @@ const AddedCourses = ({
   const handleAddSubject = () => {
     setAddedSubjects([...addedSubjects, selectACourse]);
     setSelectACourse(null);
-    setIsTableOpen(true); // Expand the table when a subject is added
+    setIsTableOpen(true); 
   };
 
   const handleDeleteSubject = (subject) => {
