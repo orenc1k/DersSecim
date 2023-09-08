@@ -21,7 +21,6 @@ import { GetAllMustCoursesODTU } from "./Crud";
 
 const AddedCourses = ({
   allCourses,
-  removeCourse,
   courseType,
   setCourseType,
   addedSubjects,
@@ -29,7 +28,8 @@ const AddedCourses = ({
 }) => {
   const [allMustCourses, setAllMustCourses] = useState([]);
   const [selectACourse, setSelectACourse] = useState(null);
-  const [isTableOpen, setIsTableOpen] = useState(false);
+  const [isTableOpen, setIsTableOpen] = useState(false); 
+
   const fetchAllCoursesCalled = useRef(false);
 
   const formContainerStyle = {
@@ -43,22 +43,25 @@ const AddedCourses = ({
     marginRight: "10px",
     margin: "0 10px",
   };
+
   useEffect(() => {
     if (!fetchAllCoursesCalled.current) {
       fetchAllCoursesCalled.current = true;
       handleAllMustCourses();
     }
-  }, []);
+    setIsTableOpen(addedSubjects.length > 0);
+  }, [addedSubjects]);
 
   const handleAddSubject = () => {
     setAddedSubjects([...addedSubjects, selectACourse]);
     setSelectACourse(null);
-    setIsTableOpen(true); 
+    setIsTableOpen(true);
   };
 
   const handleDeleteSubject = (subject) => {
     setAddedSubjects(addedSubjects.filter((s) => s !== subject));
   };
+
   const handleAllMustCourses = async () => {
     console.log("handleAllMustCourses");
     const res = await GetAllMustCoursesODTU();
@@ -70,6 +73,7 @@ const AddedCourses = ({
       ]);
     });
   };
+
   return (
     <div>
       <div style={{ display: "flex" }}>

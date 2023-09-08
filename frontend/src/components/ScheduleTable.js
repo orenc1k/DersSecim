@@ -50,6 +50,9 @@ const ScheduleTable = () => {
     "18:40-19:30": {},
     "19:40-20:30": {},
   });
+  const [scheduleOptions, setScheduleOptions] = useState([schedule]);
+  const [currentScheduleIndex, setCurrentScheduleIndex] = useState(0);
+  const currentSchedule = scheduleOptions[currentScheduleIndex];
 
 
   useEffect(() => {
@@ -100,6 +103,16 @@ const ScheduleTable = () => {
   } 
   };
 
+  const handleNextSchedule = () => {
+    setCurrentScheduleIndex((prevIndex) =>
+      prevIndex === scheduleOptions.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+  const handlePreviousSchedule = () => {
+    setCurrentScheduleIndex((prevIndex) =>
+      prevIndex === 0 ? scheduleOptions.length - 1 : prevIndex - 1
+    );
+  };
   return (
     <div style={{ display: "flex", alignItems: "flex-start" }}>
       <div style={{ flex: 1 }}>
@@ -111,6 +124,10 @@ const ScheduleTable = () => {
             setScheduleTableUpdated={setScheduleTableUpdated}
             schedule={schedule}
             setSchedule={setSchedule}
+            setScheduleOptions={setScheduleOptions}
+            currentSchedule={currentSchedule}
+            handleNextSchedule={handleNextSchedule}
+            handlePreviousSchedule={handlePreviousSchedule}
           />
         </h3>
       </div>
@@ -139,6 +156,12 @@ const ScheduleTable = () => {
             selectedSemester={selectedSemester}
             setMustCourses={setMustCourses}
             deptCode={deptCode}
+            addedSubjects={addedSubjects}
+            setAddedSubjects={setAddedSubjects}
+            surname={surname}
+            schedule={schedule}
+            setSchedule={setSchedule}
+            setScheduleTableUpdated={setScheduleTableUpdated}
           />
           <div style={{ marginTop: "30px" }}>
             <div style={{ marginLeft: "100px" }}>
