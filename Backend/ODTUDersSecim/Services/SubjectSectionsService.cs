@@ -5,7 +5,7 @@ using ODTUDersSecim.DTOs;
 using Microsoft.EntityFrameworkCore;
 using ODTUDersSecim.Models;
 using System.Xml.Linq;
-
+using System.Globalization; 
 
 namespace ODTUDersSecim.Services
 {
@@ -85,6 +85,12 @@ namespace ODTUDersSecim.Services
 
             return false;
         }
+        private bool IsWithinTurkishRange(string surname, string startChar, string endChar)
+        {
+            return StringComparer.Create(new CultureInfo("tr-TR"), false).Compare(surname, startChar) >= 0 &&
+                   StringComparer.Create(new CultureInfo("tr-TR"), false).Compare(surname, endChar) <= 0;
+        }
+
         public async Task<List<SectionDays>> GetSectionDays(int subjectCode, float? cumGPA, string? surname, string? courseGrade)
         {
             try
@@ -93,13 +99,13 @@ namespace ODTUDersSecim.Services
 
                 var matchingSections = odtuDersSecimDbContext.SubjectSections
                     .Where(x => x.SubjectCode == subjectCode)
-                    .AsEnumerable() // Convert to client-side evaluation
+                    .AsEnumerable() 
                     .Where(x =>
                         (cumGPA == null || (cumGPA >= x.MinCumGpa && cumGPA <= x.MaxCumGpa)) &&
-                        (surname == null ||(string.Compare(surname, x.StartChar, StringComparison.Ordinal) >= 0 &&
-                                            string.Compare(surname, x.EndChar, StringComparison.Ordinal) <= 0)) &&
+                        (surname == null || IsWithinTurkishRange(surname, x.StartChar, x.EndChar)) &&
                         (courseGrade == null || GradeChecker(courseGrade, x.StartGrade, x.EndGrade)))
                     .ToList();
+
 
                 foreach (var matchingSection in matchingSections)
                 {   
