@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Select, MenuItem, FormControl } from "@mui/material"; 
-
+import { GetAllMustCoursesODTU } from "./Crud";
 
 const AddedCourses = ({ courses, removeCourse,courseType,setCourseType }) => {
+    const [allMustCourses,setAllMustCourses]=React.useState([]);
+    const fetchAllCoursesCalled = React.useRef(false);
+    const [selectACourse,setSelectACourse]=React.useState("");
 const formContainerStyle = {
 display: "flex",
 alignItems: "center",
@@ -15,6 +18,26 @@ marginRight: "10px",
 margin: "0 10px",
 };
 
+useEffect(() => {
+    if (!fetchAllCoursesCalled.current) {
+        fetchAllCoursesCalled.current = true;
+        handleAllMustCourses();
+    }
+}, []);
+
+const handleAllMustCourses = async () => {
+    console.log("handleAllMustCourses");
+    const res = await GetAllMustCoursesODTU();
+    console.log(res.data);
+    res.data.map((course) => {
+       return setAllMustCourses((allMustCourses) => [...allMustCourses, course.courseName]);
+    });
+}
+
+const handleSelectACourse = (selectedCourse) => {
+    setSelectACourse(selectedCourse);
+    console.log("selectedCourse",selectedCourse);
+}
 return (
 <div style={{ display: "flex"}}> 
 
@@ -24,7 +47,7 @@ return (
           <label style={{ labelStyle, color: "orange" }}>CourseType</label>
           <Select 
             value={courseType}
-            onChange={(e) =>{setCourseType(e.target.value);console.log(e.target.value)}
+            onChange={(e) =>{setCourseType(e.target.value)}
             }
             style={{ marginLeft: "10px",marginTop:"20px"}}
           >
@@ -53,20 +76,24 @@ return (
     style={{marginLeft:"100px"}}
     >
       <div style={{formContainerStyle}}>
-        <label style={{ labelStyle, color: "orange" }}>Added Courses</label>
+        <label style={{ labelStyle, color: "orange" }}>CourseName</label>
         <Select
-          value={courses}
-          onChange={(e) => removeCourse(e.target.value)}
-          style={{ marginLeft: "10px" }}
+          value={selectACourse}
+          onChange={(e) => setSelectACourse(e.target.value)}
+          style={{ marginLeft: "10px",marginTop:"20px" }}
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {courses.map((course) => (
+          {courseType==="AllCourses"? courses.map((course) => (
             <MenuItem key={course} value={course}>
               {course}
             </MenuItem>
-          ))}
+            )):courseType==="Must"? allMustCourses.map((course) => (
+                <MenuItem key={course} value={course}>
+                    {course}
+                </MenuItem>
+                )):null}
         </Select>
       </div>
     </FormControl>
