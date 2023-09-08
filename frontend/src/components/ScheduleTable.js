@@ -34,6 +34,8 @@ const ScheduleTable = () => {
   const fetchAllCoursesCalled = useRef(false);
   const [courseType, setCourseType] = useState("");
 
+  const [addedSubjects, setAddedSubjects] = useState([]); 
+
   const [schedule, setSchedule] = useState({
     "08:40-9:30": {},
     "09:40-10:30": {},
@@ -89,7 +91,7 @@ const ScheduleTable = () => {
       const deptName = deptResponse.data.deptShortName;
       setAllCourses((prevCourses) => [
         ...prevCourses,
-        `${deptName}${subject.subjectCode.toString().slice(4)}`,
+        `${deptName}${subject.subjectCode.toString().slice(4)}`+":"+subject.subjectName,
       ]);
     }
 
@@ -188,14 +190,13 @@ const ScheduleTable = () => {
             </h3>
             </div>  
           <AddedCourses
-          courses={allCourses}
+          allCourses={allCourses}
           courseType={courseType}
           setCourseType={setCourseType}
+          addedSubjects={addedSubjects}
+          setAddedSubjects={setAddedSubjects}
           />    
      </div>
-      </div>
-      <div>
-          {allCourses}
       </div>
     </div>
   );
