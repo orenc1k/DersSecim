@@ -59,6 +59,34 @@ namespace ODTUDersSecim.Controllers
             return Ok(subjectSection);
         }
 
+
+        [HttpPost("listOfSubjects")]
+        [ProducesResponseType(typeof(List<Subject>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> GetSchedule([FromBody] List<Subject> scheduleRequest)
+        {
+            var subjectSection = await _subjectSectionDaysService.GetSchedule(scheduleRequest);
+            if (subjectSection == null)
+            {
+                return NotFound();
+            }
+            return Ok(subjectSection);
+        }
+
+
+        [HttpGet("{subjectCode}/{sectionId}")]
+        [ProducesResponseType(typeof(SectionDaysDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(SectionDaysDTO), (int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult> GetSubjectSectionDetails(int subjectCode, int sectionId)
+        {
+            var subjectSections = await _subjectSectionDaysService.GetSubjectSectionDetails(subjectCode, sectionId);
+
+            if (subjectSections == null) return NotFound();
+
+            return Ok(subjectSections);
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(SectionDays), (int)HttpStatusCode.NotFound)]

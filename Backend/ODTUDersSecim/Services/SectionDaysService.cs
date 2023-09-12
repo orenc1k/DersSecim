@@ -13,6 +13,7 @@ namespace ODTUDersSecim.Services
 
         private readonly ODTUDersSecimDBContext odtuDersSecimDbContext;
 
+
         public SectionDaysService(ODTUDersSecimDBContext dBContext)
         {
             this.odtuDersSecimDbContext = dBContext;
@@ -37,6 +38,118 @@ namespace ODTUDersSecim.Services
             return subjectSectionDays;
         }
 
+        public async Task<SectionDaysDTO> GetSubjectSectionDetails(int subjectCode, int sectionId)
+        {
+            var subjectSectionDetails = await odtuDersSecimDbContext.SectionDays.Where(x => x.SubjectCode == subjectCode && x.SectionId == sectionId).FirstOrDefaultAsync();
+            if (subjectSectionDetails == null)
+                return new SectionDaysDTO();
+            else
+            {
+
+                    var detail = new SectionDaysDTO()
+                    {
+                        SubjectCode = subjectSectionDetails.SubjectCode,
+                        SectionId = subjectSectionDetails.SectionId,
+                        Day1 = subjectSectionDetails.Day1,
+                        Day2 = subjectSectionDetails.Day2,
+                        Day3 = subjectSectionDetails.Day3,
+                        Time1 = subjectSectionDetails.Time1,
+                        Time2 = subjectSectionDetails.Time2,
+                        Time3 = subjectSectionDetails.Time3
+                    };
+                
+                return detail;
+            }
+          
+        }
+        public async Task<List<List<SectionDaysDTO>>> GetSchedule(List<Subject> listOfSubjects)
+        {
+            var allSchedules = new List<List<SectionDaysDTO>>();
+
+            var firstSubject = listOfSubjects.FirstOrDefault().SubjectCode;
+            int numberOfSubject = 0;
+
+            foreach (var subject in listOfSubjects)
+            {
+                numberOfSubject++;
+                foreach (var sectionId in subject.Sections)
+                {
+                    var section = await GetSubjectSectionDetails(subject.SubjectCode, sectionId);
+
+                    if (firstSubject == subject.SubjectCode)
+                    {
+                        var newSchedule = new List<SectionDaysDTO> { section };
+                        allSchedules.Add(newSchedule);
+
+                    }
+                    else
+                    {
+
+                        var indexes = allSchedules
+                            .Select((existingSchedule, index) => new { Schedule = existingSchedule, Index = index })
+                            .Where(scheduleWithIndex =>
+                                !scheduleWithIndex.Schedule.All(existingSection =>
+                                    (existingSection.Day1 != null && (existingSection.Day1 == section.Day1 && existingSection.Time1 == section.Time1)) ||
+                                    (existingSection.Day2 != null && (existingSection.Day2 == section.Day2 && existingSection.Time2 == section.Time2)) ||
+                                    (existingSection.Day3 != null && (existingSection.Day3 == section.Day3 && existingSection.Time3 == section.Time3))
+                                )
+                            )
+                            .Select(scheduleWithIndex => scheduleWithIndex.Index)
+                            .ToList();
+
+
+
+                        foreach (var index in indexes)
+                        {
+                            if (numberOfSubject != allSchedules[index].Count)
+                            {
+                                var newSchedule = new List<SectionDaysDTO>(allSchedules[index])
+                            {
+                                section
+                            };
+                                allSchedules.Add(newSchedule);
+                            }
+
+
+                        }
+                    }
+
+                }
+
+                for (int i = allSchedules.Count - 1; i >= 0; i--)
+                {
+                    var schedule = allSchedules[i];
+
+                    if (schedule.Count < numberOfSubject)
+                    {
+                        allSchedules.RemoveAt(i);
+                    }
+                }
+            }
+
+            return allSchedules;
+        }
+
+
+
+        public async Task<List<SectionDaysDTO>> Helper (List<Subject> listOfSubjects, int[] sections)
+        {
+            var scheduleList = new List<List<SectionDaysDTO>>();
+
+            foreach (var subject in listOfSubjects)
+            {
+                var schedule = new List<SectionDaysDTO>();
+                if (subject.Sections == sections)
+                {
+                    ;
+                }
+                else
+                {
+
+                }
+            }
+            return default;
+        }
         public async Task<IslemSonuc<SectionDays>> DeleteSubjectSectionDays(int sectionDaysId)
         {
             try
