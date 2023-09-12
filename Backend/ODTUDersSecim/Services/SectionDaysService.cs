@@ -130,26 +130,6 @@ namespace ODTUDersSecim.Services
             return allSchedules;
         }
 
-
-
-        public async Task<List<SectionDaysDTO>> Helper (List<Subject> listOfSubjects, int[] sections)
-        {
-            var scheduleList = new List<List<SectionDaysDTO>>();
-
-            foreach (var subject in listOfSubjects)
-            {
-                var schedule = new List<SectionDaysDTO>();
-                if (subject.Sections == sections)
-                {
-                    ;
-                }
-                else
-                {
-
-                }
-            }
-            return default;
-        }
         public async Task<IslemSonuc<SectionDays>> DeleteSubjectSectionDays(int sectionDaysId)
         {
             try
