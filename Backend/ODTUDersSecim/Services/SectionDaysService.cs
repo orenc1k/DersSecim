@@ -62,6 +62,62 @@ namespace ODTUDersSecim.Services
             }
           
         }
+        public bool CheckCourseConflict(SectionDaysDTO first, SectionDaysDTO second)
+        {
+            bool conflic1 = CheckConflict(first.Day1, first.Time1, second.Day1, second.Time1);
+            bool conflic2 = CheckConflict(first.Day1, first.Time1, second.Day2, second.Time2);
+            bool conflic3 = CheckConflict(first.Day1, first.Time1, second.Day3, second.Time3);
+            bool conflic4 = CheckConflict(first.Day2, first.Time2, second.Day1, second.Time1);
+            bool conflic5 = CheckConflict(first.Day2, first.Time2, second.Day2, second.Time2);
+            bool conflic6 = CheckConflict(first.Day2, first.Time2, second.Day3, second.Time3);
+            bool conflic7 = CheckConflict(first.Day3, first.Time3, second.Day1, second.Time1);
+            bool conflic8 = CheckConflict(first.Day3, first.Time3, second.Day2, second.Time2);
+            bool conflic9 = CheckConflict(first.Day3, first.Time3, second.Day3, second.Time3);
+
+
+            return conflic1 || conflic2 || conflic3 || conflic4 || conflic5 || conflic6 || conflic7 || conflic8 || conflic9;
+        }
+
+        private bool CheckConflict(string day1, string time1, string day2, string time2)
+        {
+            return !string.IsNullOrEmpty(day1) && !string.IsNullOrEmpty(time1) &&
+                   !string.IsNullOrEmpty(day2) && !string.IsNullOrEmpty(time2) &&
+                   day1 == day2 && (IsTimeIntervalWithin(time1, time2) || IsTimeIntervalWithin(time2, time1));
+        }
+        private bool IsTimeIntervalWithin(string innerTimeInterval, string outerTimeInterval)
+        {
+            TimeSpan innerStart, innerEnd, outerStart, outerEnd;
+
+            if (TryParseTimeInterval(innerTimeInterval, out innerStart, out innerEnd) &&
+                TryParseTimeInterval(outerTimeInterval, out outerStart, out outerEnd))
+            {
+                return innerStart >= outerStart && innerEnd <= outerEnd;
+            }
+
+            return false;
+        }
+
+        private bool TryParseTimeInterval(string timeInterval, out TimeSpan startTime, out TimeSpan endTime)
+        {
+            startTime = TimeSpan.Zero;
+            endTime = TimeSpan.Zero;
+
+            string[] parts = timeInterval.Split('-');
+            if (parts.Length != 2)
+                return false;
+
+            string startTimeWithSeconds = parts[0].Trim() + ":00";
+            string endTimeWithSeconds = parts[1].Trim() + ":00";
+
+            if (TimeSpan.TryParseExact(startTimeWithSeconds, "hh\\:mm\\:ss", null, out startTime) &&
+                TimeSpan.TryParseExact(endTimeWithSeconds, "hh\\:mm\\:ss", null, out endTime))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<List<List<SectionDaysDTO>>> GetSchedule(List<Subject> listOfSubjects)
         {
             var allSchedules = new List<List<SectionDaysDTO>>();
@@ -84,14 +140,11 @@ namespace ODTUDersSecim.Services
                     }
                     else
                     {
-
                         var indexes = allSchedules
                             .Select((existingSchedule, index) => new { Schedule = existingSchedule, Index = index })
                             .Where(scheduleWithIndex =>
                                 !scheduleWithIndex.Schedule.All(existingSection =>
-                                    (existingSection.Day1 != null && (existingSection.Day1 == section.Day1 && existingSection.Time1 == section.Time1)) ||
-                                    (existingSection.Day2 != null && (existingSection.Day2 == section.Day2 && existingSection.Time2 == section.Time2)) ||
-                                    (existingSection.Day3 != null && (existingSection.Day3 == section.Day3 && existingSection.Time3 == section.Time3))
+                                    CheckCourseConflict(existingSection,section)
                                 )
                             )
                             .Select(scheduleWithIndex => scheduleWithIndex.Index)
