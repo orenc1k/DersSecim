@@ -19,6 +19,8 @@ namespace ODTUDersSecim.Models
         public string? Day3 { get; set; }
         public string? Time3 { get; set; }
 
+        public string? Place { get; set; }
+        public string? InstructorName { get; set;}
 
         [ForeignKey("SectionId")]
         public int? SectionId { get; set; }

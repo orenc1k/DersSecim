@@ -15,6 +15,9 @@ namespace ODTUDersSecim.DTOs
 
         public int? SectionId { get; set; }
         public int? SubjectCode { get; set; }
+
+        public string? Place { get; set; }
+        public string? InstructorName { get; set; }
     }
 }
 

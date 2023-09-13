@@ -46,16 +46,18 @@ namespace ODTUDersSecim.Services
             else
             {
 
-                    var detail = new SectionDaysDTO()
-                    {
-                        SubjectCode = subjectSectionDetails.SubjectCode,
-                        SectionId = subjectSectionDetails.SectionId,
-                        Day1 = subjectSectionDetails.Day1,
-                        Day2 = subjectSectionDetails.Day2,
-                        Day3 = subjectSectionDetails.Day3,
-                        Time1 = subjectSectionDetails.Time1,
-                        Time2 = subjectSectionDetails.Time2,
-                        Time3 = subjectSectionDetails.Time3
+                var detail = new SectionDaysDTO()
+                {
+                    SubjectCode = subjectSectionDetails.SubjectCode,
+                    SectionId = subjectSectionDetails.SectionId,
+                    Day1 = subjectSectionDetails.Day1,
+                    Day2 = subjectSectionDetails.Day2,
+                    Day3 = subjectSectionDetails.Day3,
+                    Time1 = subjectSectionDetails.Time1,
+                    Time2 = subjectSectionDetails.Time2,
+                    Time3 = subjectSectionDetails.Time3,
+                    InstructorName = subjectSectionDetails.InstructorName,
+                    Place = subjectSectionDetails.Place
                     };
                 
                 return detail;
@@ -223,7 +225,9 @@ namespace ODTUDersSecim.Services
                     Time2 = subjectSectionDaysDTO.Time2,
                     Time3 = subjectSectionDaysDTO.Time3,
                     SectionId = subjectSectionDaysDTO.SectionId,
-                    SubjectCode = subjectSectionDaysDTO.SubjectCode
+                    SubjectCode = subjectSectionDaysDTO.SubjectCode,
+                    InstructorName= subjectSectionDaysDTO.InstructorName,
+                    Place = subjectSectionDaysDTO.Place
                 };
                 await odtuDersSecimDbContext.SectionDays.AddAsync(sectionDay);
                 await odtuDersSecimDbContext.SaveChangesAsync();
@@ -261,6 +265,8 @@ namespace ODTUDersSecim.Services
                     updatedSubjectSectionDays.Time3 = subjectSectionDays.Time3;
                     updatedSubjectSectionDays.SubjectCode = subjectSectionDays.SubjectCode;
                     updatedSubjectSectionDays.SectionId = subjectSectionDays.SectionId;
+                    updatedSubjectSectionDays.InstructorName = subjectSectionDays.InstructorName;
+                    updatedSubjectSectionDays.Place = subjectSectionDays.Place;
 
                     odtuDersSecimDbContext.SectionDays.Update(updatedSubjectSectionDays);
                     await odtuDersSecimDbContext.SaveChangesAsync();
@@ -286,10 +292,12 @@ namespace ODTUDersSecim.Services
               x.Day3 == subjectSectionDaysDTO.Day3 &&
               x.Time1 == subjectSectionDaysDTO.Time1 &&
               x.Time2 == subjectSectionDaysDTO.Time2 &&
-              x.Time3 == subjectSectionDaysDTO.Time3 
+              x.Time3 == subjectSectionDaysDTO.Time3 &&
+              x.InstructorName == subjectSectionDaysDTO.InstructorName &&
+              x.Place == subjectSectionDaysDTO.Place 
                ));
 
-            return checkSubjectDays;       /// Farklı ders aynı saatte olması sıkıntısı var
+            return checkSubjectDays;     
         }
 
 
