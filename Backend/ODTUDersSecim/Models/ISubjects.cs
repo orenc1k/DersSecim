@@ -10,7 +10,7 @@ namespace ODTUDersSecim.Models
 
         public string? SubjectName { get; set; }
 
-        public int? SubjectCredit { get; set; }
+        public float? SubjectCredit { get; set; }
 
         public string? SubjectLevel { get; set; }
 

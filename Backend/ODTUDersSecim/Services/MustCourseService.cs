@@ -25,7 +25,6 @@ namespace ODTUDersSecim.Services
             var mustCoursesDTO = await odtuDersSecimDbContext.MustCourses
                 .Select(x => new MustCourseDTO
                 {
-                    CourseName = x.CourseName,
                     Semester = x.Semester,
                     DeptCode = x.DeptCode,
                     SubjectCode= x.SubjectCode
@@ -46,7 +45,6 @@ namespace ODTUDersSecim.Services
                                                                                   x.Semester == semester).Select(x => new MustCourseDTO
                                                                                   {
                                                                                       Semester = x.Semester,
-                                                                                      CourseName = x.CourseName,
                                                                                       DeptCode = x.DeptCode,
                                                                                       SubjectCode= x.SubjectCode
                                                                                   }).ToListAsync();
@@ -80,7 +78,7 @@ namespace ODTUDersSecim.Services
         {
             try
             {
-                var checkMustCourse = await MustCourseCheck(mustCourseDTO.CourseName, mustCourseDTO.DeptCode, mustCourseDTO.Semester);
+                var checkMustCourse = await MustCourseCheck(mustCourseDTO.SubjectCode, mustCourseDTO.DeptCode, mustCourseDTO.Semester);
                 if (checkMustCourse)
                 {
                     return new IslemSonuc<MustCourseDTO>().Basarisiz("Departman tabloda var");
@@ -88,7 +86,6 @@ namespace ODTUDersSecim.Services
 
                 var addedMustCourse = new MustCourses
                 {
-                    CourseName = mustCourseDTO.CourseName,
                     DeptCode = mustCourseDTO.DeptCode,
                     Semester = mustCourseDTO.Semester,
                     SubjectCode= mustCourseDTO.SubjectCode
@@ -116,7 +113,6 @@ namespace ODTUDersSecim.Services
                 if (updatedMustCourse != null)
                 {
                     updatedMustCourse.DeptCode = mustCourse.DeptCode;
-                    updatedMustCourse.CourseName = mustCourse.CourseName;
                     updatedMustCourse.Semester = mustCourse.Semester;
                     updatedMustCourse.Departments = mustCourse.Departments;
                     updatedMustCourse.SubjectCode = mustCourse.SubjectCode;
@@ -137,9 +133,11 @@ namespace ODTUDersSecim.Services
 
         }
 
-        public async Task<bool> MustCourseCheck(string courseName, int deptCode, int semester)
+        public async Task<bool> MustCourseCheck(int subjectCode, int deptCode, int semester)
         {
-            var checkMustCourse = await odtuDersSecimDbContext.MustCourses.Where(x => x.DeptCode == deptCode).Where(x => x.Semester == semester).Where(x => x.CourseName == courseName).AnyAsync();
+            var checkMustCourse = await odtuDersSecimDbContext.MustCourses.Where(x => x.DeptCode == deptCode &&
+                                                                                      x.SubjectCode== subjectCode &&
+                                                                                      x.Semester == semester).AnyAsync();
 
             return checkMustCourse;
         }

@@ -9,9 +9,12 @@ namespace ODTUDersSecim.Models
         [Key]
         public int SubjectCode { get; set; }
 
+        [StringLength(100)]
         public string? SubjectName { get; set; }
 
-        public int? SubjectCredit { get; set; }
+        public float? EctsCredit { get; set; }
+
+        public float? SubjectCredit { get; set; }
 
         public string? SubjectLevel { get; set; }
 

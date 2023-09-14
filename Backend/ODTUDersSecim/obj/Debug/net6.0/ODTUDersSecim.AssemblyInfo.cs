@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ODTUDersSecim")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a447f48d8a7ba278d05410ccc09608a806f2120")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ODTUDersSecim")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ODTUDersSecim")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -54,18 +54,19 @@ namespace ODTUDersSecim.Services
             }
         }
 
-        public async Task<IslemSonuc<Subjects>> AddSubject(Subjects cengSubject)
+        public async Task<IslemSonuc<Subjects>> AddSubject(Subjects subject)
         {
             try
             {
-                var checkSubject = await SubjectCheckAsync(cengSubject.SubjectCode);
+                var checkSubject = await SubjectCheckAsync(subject.SubjectCode);
                 if (checkSubject)
                 {
-                    return new IslemSonuc<Subjects>().Basarisiz("Ders tabloda var");
+                    await UpdateSubject(subject);
+                    return new IslemSonuc<Subjects>().Basarili();
                 }
-                await odtuDersSecimDbContext.Subjects.AddAsync(cengSubject);
+                await odtuDersSecimDbContext.Subjects.AddAsync(subject);
                 await odtuDersSecimDbContext.SaveChangesAsync();
-                var islemSonuc = new IslemSonuc<Subjects>().Basarili(cengSubject);
+                var islemSonuc = new IslemSonuc<Subjects>().Basarili(subject);
                 return islemSonuc;
             }
 

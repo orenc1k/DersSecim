@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ODTUDersSecim.Models;
@@ -11,9 +12,11 @@ using ODTUDersSecim.Models;
 namespace ODTUDersSecim.Migrations
 {
     [DbContext(typeof(ODTUDersSecimDBContext))]
-    partial class ODTUDersSecimDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230914180859_isActiveCourse")]
+    partial class isActiveCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +51,10 @@ namespace ODTUDersSecim.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MustCourseId"));
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int?>("DepartmentsDeptCode")
                         .HasColumnType("integer");
@@ -185,21 +192,17 @@ namespace ODTUDersSecim.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectCode"));
 
-                    b.Property<float?>("EctsCredit")
-                        .HasColumnType("real");
-
                     b.Property<bool?>("IsActive")
                         .HasColumnType("boolean");
 
-                    b.Property<float?>("SubjectCredit")
-                        .HasColumnType("real");
+                    b.Property<int?>("SubjectCredit")
+                        .HasColumnType("integer");
 
                     b.Property<string>("SubjectLevel")
                         .HasColumnType("text");
 
                     b.Property<string>("SubjectName")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SubjectType")
                         .HasColumnType("text");

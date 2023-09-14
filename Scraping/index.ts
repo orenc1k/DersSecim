@@ -152,9 +152,8 @@ const main = async () => {
     );
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const fulldepts: string[] = [];
-    /*     console.log(optionValues);
-    console.log(departments); */
+/*     const fulldepts: string[] = [];
+
     for (let dep in departments) {
       fulldepts.push(departments[dep].deptFullName);
 
@@ -181,11 +180,10 @@ const main = async () => {
        addNewDepartment();
        console.log(addedDepartment);
     }
-
+ */
    
 
-    /*     console.log(fulldepts);
-     */ await new Promise((resolve) => setTimeout(resolve, 1000));
+/* await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await page.select('select[name="select_dept"]', "572");
     await page.click('input[type="submit"][name="submit_CourseList"]');
@@ -197,10 +195,8 @@ const main = async () => {
       const rows = document.querySelectorAll("table tr");
 
       for (let i = 2; i < rows.length; i++) {
-        // Skip the header row
         const columns = rows[i].querySelectorAll("td");
         if (columns.length >= 7) {
-          // Ensure the row has enough columns
           const courseCode = columns[1].textContent
             ? columns[1].textContent.trim()
             : "";
@@ -236,7 +232,7 @@ const main = async () => {
     });
     for (let courses in scrapedData) {
       allCourses.push(scrapedData[courses].name);
-    }
+    } */
     /*     console.log(scrapedData);
     console.log(allCourses); */
 
@@ -257,8 +253,9 @@ const main = async () => {
       }
     }); */
 
-    /*     for (let option of optionValues) {
+        for (let option of optionValues) {
       await page.select('select[name="select_dept"]', option.toString());
+      await page.select('select[name="select_semester"]', "20221");
       await page.click('input[type="submit"][name="submit_CourseList"]');
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -348,7 +345,7 @@ const main = async () => {
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
-    } */
+    } 
   } catch (error) {
     console.error("An error occurred:", error);
   } finally {

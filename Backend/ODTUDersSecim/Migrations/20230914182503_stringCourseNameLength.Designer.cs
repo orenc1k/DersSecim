@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ODTUDersSecim.Models;
@@ -11,9 +12,11 @@ using ODTUDersSecim.Models;
 namespace ODTUDersSecim.Migrations
 {
     [DbContext(typeof(ODTUDersSecimDBContext))]
-    partial class ODTUDersSecimDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230914182503_stringCourseNameLength")]
+    partial class stringCourseNameLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,6 +51,10 @@ namespace ODTUDersSecim.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MustCourseId"));
+
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int?>("DepartmentsDeptCode")
                         .HasColumnType("integer");
@@ -198,8 +205,8 @@ namespace ODTUDersSecim.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("SubjectName")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("SubjectType")
                         .HasColumnType("text");
