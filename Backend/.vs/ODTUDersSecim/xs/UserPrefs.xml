@@ -1,51 +1,47 @@
 ﻿<Properties StartupConfiguration="{2802A78D-C73E-4146-AF26-20663051F4C1}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ODTUDersSecim/Services/DepartmentService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ODTUDersSecim/Services/SubjectsService.cs">
     <Files>
-      <File FileName="ODTUDersSecim/Program.cs" Line="60" Column="1" />
+      <File FileName="ODTUDersSecim/Program.cs" />
       <File FileName="ODTUDersSecim/appsettings.json" />
-      <File FileName="ODTUDersSecim/Services/IDersSecim.cs" Line="1" Column="1" />
-      <File FileName="ODTUDersSecim/Models/ISubjects.cs" Line="1" Column="1" />
-      <File FileName="ODTUDersSecim/Models/DersSecimDBContext.cs" Line="20" Column="58" />
+      <File FileName="ODTUDersSecim/Services/IDersSecim.cs" />
+      <File FileName="ODTUDersSecim/Models/ISubjects.cs" />
+      <File FileName="ODTUDersSecim/Models/DersSecimDBContext.cs" />
       <File FileName="ODTUDersSecim/Helpers/KayitBilgi.cs" />
-      <File FileName="ODTUDersSecim/Helpers/DogrulamaAttribute.cs" Line="1" Column="1" />
-      <File FileName="ODTUDersSecim/Helpers/IslemSonuc.cs" Line="7" Column="23" />
+      <File FileName="ODTUDersSecim/Helpers/DogrulamaAttribute.cs" />
+      <File FileName="ODTUDersSecim/Helpers/IslemSonuc.cs" />
       <File FileName="ODTUDersSecim/Helpers/KullaniciBilgi.cs" />
       <File FileName="ODTUDersSecim/Helpers/StringUzunlukAttribute.cs" />
       <File FileName="ODTUDersSecim/Helpers/YardimciMetotlar.cs" />
-      <File FileName="ODTUDersSecim/Helpers/ZorunluAlanAttribute.cs" Line="14" Column="35" />
-      <File FileName="ODTUDersSecim/Models/Departments.cs" Line="16" Column="1" />
-      <File FileName="ODTUDersSecim/Controllers/DepartmentController.cs" Line="51" Column="2" />
-      <File FileName="ODTUDersSecim/Services/DepartmentService.cs" Line="40" Column="14" />
-      <File FileName="ODTUDersSecim/Models/Subjects.cs" Line="11" Column="1" />
-      <File FileName="ODTUDersSecim/Models/SubjectSections.cs" Line="34" Column="46" />
-      <File FileName="ODTUDersSecim/Services/SubjectsService.cs" Line="65" Column="18" />
-      <File FileName="ODTUDersSecim/Services/SubjectSectionsService.cs" Line="91" Column="1" />
-      <File FileName="ODTUDersSecim/Controllers/SubjectsController.cs" Line="56" Column="49" />
-      <File FileName="ODTUDersSecim/Controllers/SubjectSectionsController.cs" Line="70" Column="1" />
-      <File FileName="ODTUDersSecim/Models/SectionDays.cs" Line="27" Column="19" />
-      <File FileName="ODTUDersSecim/Services/SectionDaysService.cs" Line="40" Column="1" />
-      <File FileName="ODTUDersSecim/Controllers/SectionDaysController.cs" Line="62" Column="19" />
-      <File FileName="ODTUDersSecim/Migrations/ODTUDersSecimDBContextModelSnapshot.cs" Line="28" Column="17" />
-      <File FileName="ODTUDersSecim/Models/ErrorViewModel.cs" Line="1" Column="1" />
-      <File FileName="ODTUDersSecim/DTOs/SubjectSectionsDTO.cs" Line="9" Column="1" />
-      <File FileName="ODTUDersSecim/DTOs/SectionDaysDTO.cs" Line="21" Column="1" />
-      <File FileName="../../../../../usr/local/share/dotnet/sdk/7.0.307/Microsoft.Common.CurrentVersion.targets" Line="4752" Column="5" />
-      <File FileName="ODTUDersSecim/Models/MustCourses.cs" Line="23" Column="19" />
-      <File FileName="ODTUDersSecim/DTOs/MustCourseDTO.cs" Line="11" Column="45" />
-      <File FileName="ODTUDersSecim/Services/MustCourseService.cs" Line="122" Column="76" />
-      <File FileName="ODTUDersSecim/Controllers/MustCourseController.cs" Line="77" Column="14" />
+      <File FileName="ODTUDersSecim/Helpers/ZorunluAlanAttribute.cs" />
+      <File FileName="ODTUDersSecim/Models/Departments.cs" />
+      <File FileName="ODTUDersSecim/Controllers/DepartmentController.cs" />
+      <File FileName="ODTUDersSecim/Services/DepartmentService.cs" />
+      <File FileName="ODTUDersSecim/Models/Subjects.cs" />
+      <File FileName="ODTUDersSecim/Models/SubjectSections.cs" />
+      <File FileName="ODTUDersSecim/Services/SubjectsService.cs" Line="52" Column="61" />
+      <File FileName="ODTUDersSecim/Services/SubjectSectionsService.cs" />
+      <File FileName="ODTUDersSecim/Controllers/SubjectsController.cs" />
+      <File FileName="ODTUDersSecim/Controllers/SubjectSectionsController.cs" />
+      <File FileName="ODTUDersSecim/Models/SectionDays.cs" />
+      <File FileName="ODTUDersSecim/Services/SectionDaysService.cs" />
+      <File FileName="ODTUDersSecim/Controllers/SectionDaysController.cs" />
+      <File FileName="ODTUDersSecim/Models/ErrorViewModel.cs" />
+      <File FileName="ODTUDersSecim/DTOs/SubjectSectionsDTO.cs" />
+      <File FileName="ODTUDersSecim/DTOs/SectionDaysDTO.cs" />
+      <File FileName="../../../../../usr/local/share/dotnet/sdk/7.0.307/Microsoft.Common.CurrentVersion.targets" />
+      <File FileName="ODTUDersSecim/Models/MustCourses.cs" />
+      <File FileName="ODTUDersSecim/DTOs/MustCourseDTO.cs" />
+      <File FileName="ODTUDersSecim/Services/MustCourseService.cs" />
+      <File FileName="ODTUDersSecim/Controllers/MustCourseController.cs" />
+      <File FileName="ODTUDersSecim/Models/Subject.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="ODTUDersSecim">
             <Node name="ODTUDersSecim">
-              <Node name="Controllers" expanded="True" />
-              <Node name="DTOs" expanded="True" />
-              <Node name="Helpers" expanded="True" />
-              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True">
-                <Node name="DepartmentService.cs" selected="True" />
+                <Node name="SubjectsService.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -57,9 +53,11 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/Services/CengDersSecimService.cs" relfile="ODTUDersSecim/Services/CengDersSecimService.cs" line="22" column="1" />
+      <Breakpoint file="/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/Services/SubjectsService.cs" relfile="ODTUDersSecim/Services/SubjectsService.cs" line="36" column="1" />
+      <Breakpoint file="/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/Controllers/SubjectsController.cs" relfile="ODTUDersSecim/Controllers/SubjectsController.cs" line="50" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.ODTUDersSecim PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.ODTUDersSecim PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
