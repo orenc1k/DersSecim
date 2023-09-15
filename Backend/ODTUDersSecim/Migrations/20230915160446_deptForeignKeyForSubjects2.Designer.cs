@@ -12,8 +12,8 @@ using ODTUDersSecim.Models;
 namespace ODTUDersSecim.Migrations
 {
     [DbContext(typeof(ODTUDersSecimDBContext))]
-    [Migration("20230906174501_mustCourse2")]
-    partial class mustCourse2
+    [Migration("20230915160446_deptForeignKeyForSubjects2")]
+    partial class deptForeignKeyForSubjects2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,10 +51,6 @@ namespace ODTUDersSecim.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MustCourseId"));
-
-                    b.Property<string>("CourseName")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<int?>("DepartmentsDeptCode")
                         .HasColumnType("integer");
@@ -95,6 +91,12 @@ namespace ODTUDersSecim.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Day3")
+                        .HasColumnType("text");
+
+                    b.Property<string>("InstructorName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Place")
                         .HasColumnType("text");
 
                     b.Property<int?>("SectionId")
@@ -186,19 +188,31 @@ namespace ODTUDersSecim.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectCode"));
 
-                    b.Property<int?>("SubjectCredit")
+                    b.Property<int?>("DepartmentsDeptCode")
                         .HasColumnType("integer");
+
+                    b.Property<int?>("DeptCode")
+                        .HasColumnType("integer");
+
+                    b.Property<float?>("EctsCredit")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("SubjectCredit")
+                        .HasColumnType("real");
 
                     b.Property<string>("SubjectLevel")
                         .HasColumnType("text");
 
                     b.Property<string>("SubjectName")
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("SubjectType")
                         .HasColumnType("text");
 
                     b.HasKey("SubjectCode");
+
+                    b.HasIndex("DepartmentsDeptCode");
 
                     b.ToTable("Subjects");
                 });
@@ -240,6 +254,15 @@ namespace ODTUDersSecim.Migrations
                         .HasForeignKey("SubjectsSubjectCode");
 
                     b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("ODTUDersSecim.Models.Subjects", b =>
+                {
+                    b.HasOne("ODTUDersSecim.Models.Departments", "Departments")
+                        .WithMany()
+                        .HasForeignKey("DepartmentsDeptCode");
+
+                    b.Navigation("Departments");
                 });
 #pragma warning restore 612, 618
         }
