@@ -185,11 +185,14 @@ namespace ODTUDersSecim.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectCode"));
 
+                    b.Property<int?>("DepartmentsDeptCode")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("DeptCode")
+                        .HasColumnType("integer");
+
                     b.Property<float?>("EctsCredit")
                         .HasColumnType("real");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("boolean");
 
                     b.Property<float?>("SubjectCredit")
                         .HasColumnType("real");
@@ -205,6 +208,8 @@ namespace ODTUDersSecim.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("SubjectCode");
+
+                    b.HasIndex("DepartmentsDeptCode");
 
                     b.ToTable("Subjects");
                 });
@@ -246,6 +251,15 @@ namespace ODTUDersSecim.Migrations
                         .HasForeignKey("SubjectsSubjectCode");
 
                     b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("ODTUDersSecim.Models.Subjects", b =>
+                {
+                    b.HasOne("ODTUDersSecim.Models.Departments", "Departments")
+                        .WithMany()
+                        .HasForeignKey("DepartmentsDeptCode");
+
+                    b.Navigation("Departments");
                 });
 #pragma warning restore 612, 618
         }

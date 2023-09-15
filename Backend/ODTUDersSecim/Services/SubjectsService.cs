@@ -32,6 +32,40 @@ namespace ODTUDersSecim.Services
             return subject;
         }
 
+        public async Task<bool> AddSubjectDeptCode()
+        {
+            try
+            {
+                var allSubjects = await GetSubjects();
+
+                foreach(var subject in allSubjects)
+                {
+                    string deptCodeString = subject.SubjectCode.ToString().Substring(0, 3);
+                    int deptCode = int.Parse(deptCodeString);
+
+                    var updateSubject = new Subjects()
+                    {
+                        SubjectCode = subject.SubjectCode,
+                        SubjectName = subject.SubjectName,
+                        SubjectCredit = subject.SubjectCredit,
+                        EctsCredit = subject.EctsCredit,
+                        SubjectLevel = subject.SubjectLevel,
+                        SubjectType = subject.SubjectType,
+                        DeptCode = deptCode,
+                        Departments = null
+                    };
+                    await UpdateSubject(updateSubject);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return false;
+
+            }
+        }
+
         public async Task<IslemSonuc<Subjects>> DeleteSubject(int subjectCode)
         {
             try
@@ -91,6 +125,8 @@ namespace ODTUDersSecim.Services
                     updatedSubject.SubjectLevel = subject.SubjectLevel;
                     updatedSubject.SubjectName = subject.SubjectName;
                     updatedSubject.SubjectType = subject.SubjectType;
+                    updatedSubject.DeptCode = subject.DeptCode;
+                    updatedSubject.Departments = subject.Departments;
 
                     odtuDersSecimDbContext.Subjects.Update(updatedSubject);
                     await odtuDersSecimDbContext.SaveChangesAsync();

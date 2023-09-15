@@ -43,6 +43,16 @@ namespace ODTUDersSecim.Controllers
             return Ok(subject);
         }
 
+        [HttpGet()]
+        [ProducesResponseType(typeof(Subjects), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Subjects), (int)HttpStatusCode.NotFound)]
+        public async Task<IActionResult> AddSubjectDeptCode()
+        {
+            await _subjectsService.AddSubjectDeptCode();
+            return Ok();
+        }
+
+
         [HttpPost]
         [ProducesResponseType(typeof(Subjects), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Subjects), (int)HttpStatusCode.NotFound)]
