@@ -56,75 +56,10 @@ const main = async () => {
         };
       }
     );
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    debugger;
 
-    await page.select('select[name="select_dept"]', "572");
-    await page.select('select[name="select_semester"]', "20221");
-    debugger;
-
-    await page.click('input[type="submit"][name="submit_CourseList"]');
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    
-
-    
-    
-      
-    const CourseData = await page.evaluate(() => {
-      const courseData = [];
-      const tableRows = document.querySelectorAll("table tbody tr");
-      const promises = Array.from(tableRows).map(async (row) => {
-        const columns = row.querySelectorAll("td");
-        if (columns.length > 5) {
-          var courseCode = columns[1].textContent.trim();
-          if (courseCode == "Code")
-            return ;
-            const ectsCredit = parseFloat(columns[3].textContent.trim());
-            const testValue = "1.5";
-            const parsedValue = parseFloat(testValue);
-            const course = {
-              subjectCode: parseInt(courseCode),
-              subjectName: columns[2].textContent.split("(")[0].trim(),
-              ectsCredit: parseFloat(ectsCredit),
-              subjectCredit: parseFloat(
-                columns[4].textContent.split("(")[0].trim()
-              ),
-              subjectLevel: columns[5].textContent.split("/")[0].trim(),
-              subjectType: columns[6].textContent.split("/")[0].trim(),
-            };
-            if (courseCode == "5720101") {
-              debugger;
-            
-            } else {
-              console.log("course:", course);
-
-            }
-            console.log("course:", course);
-            courseData.push(course);
-            await Promise.all(promises);
-     }
-    
-    });
-    
-    return courseData;
-  });
+    let unsuccessfulResponses = 0;
 
 
-console.log("data:",CourseData);
-
-  for(let course in CourseData){
-    instance.post('https://localhost:7031/api/Subjects/AddSubject', course).then((response) => {
-      console.log('POST request successful');       // CREATE DEPARTMENT
-      console.log(response.course); 
-       successfulResponses++;
-    }
-    ).catch((error) => {
-      console.error('POST request failed:', error);
-    }
-    );
-  }
-
-await new Promise((resolve) => setTimeout(resolve, 2000000));
 
 /*     const data = await page.evaluate(() => {
       const tableRows = document.querySelectorAll("table tbody tr");
@@ -179,70 +114,88 @@ await new Promise((resolve) => setTimeout(resolve, 2000000));
            console.error('POST request failed:', error);
          });
       }   */
-
-    /*     console.log(optionValues);
-    console.log(successfulResponses);
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
+        console.log(optionValues);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const Years= ["20231"];
+    for (let year in Years) {
     for (let option of optionValues) {
       await page.select('select[name="select_dept"]', await option.toString());
-      await page.select('select[name="select_semester"]', "20221");
+      await page.select('select[name="select_semester"]', Years[year]);
       await page.click('input[type="submit"][name="submit_CourseList"]');
-      console.log(await option.toString());
-      console.log("test");
+
       await page.waitForSelector("#formmessage", { timeout: 5000 });
       const messageElement = await page.$("#formmessage");
       if (messageElement) {
-        console.log("test2");
         const messageText = await page.evaluate((element) => {
           return element.textContent;
         }, messageElement);
         
-        console.log(`Message: ${messageText}`);
         if ( messageText.includes("Information about the department could not be found.")) 
-        { console.log("test3");
-          await page.select('select[name="select_semester"]', "20221");
+        { 
+          await page.select('select[name="select_semester"]', Years[year]);
         } else {
-          const data = await page.evaluate(() => {
-            const tableRows = document.querySelectorAll('table tbody tr');
-            console.log("tableRows:",tableRows);
+          const CourseData = await page.evaluate(() => {
             const courseData = [];
-            tableRows.forEach(async(row) => {
-              const columns = row.querySelectorAll('td');
-              if (columns.length>5){
+            const tableRows = document.querySelectorAll("table tbody tr");
+            const promises = Array.from(tableRows).map(async (row) => {
+              const columns = row.querySelectorAll("td");
+              if (columns.length > 5) {
                 var courseCode = columns[1].textContent.trim();
-                if (courseCode=="Code") ;
-                else {
-                   const course = {
+                if (courseCode == "Code")
+                  return ;
+                  const ectsCredit = parseFloat(columns[3].textContent.trim());
+                  const testValue = "1.5";
+                  const parsedValue = parseFloat(testValue);
+                  const course = {
                     subjectCode: parseInt(courseCode),
                     subjectName: columns[2].textContent.split("(")[0].trim(),
-                    ectsCredit: parseFloat(columns[3].textContent.trim()),
-                    subjectCredit: parseFloat(columns[4].textContent.split("(")[0].trim()),
+                    ectsCredit: parseFloat(ectsCredit),
+                    subjectCredit: parseFloat(
+                      columns[4].textContent.split("(")[0].trim()
+                    ),
                     subjectLevel: columns[5].textContent.split("/")[0].trim(),
                     subjectType: columns[6].textContent.split("/")[0].trim(),
-                  }
-                  await AddCourse(course);
-                  console.log("course:",course);
-                }
-              }
-            });
-        
-            return courseData;
+                  };
+                  courseData.push(course);
+           }
+          
           });
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          
+          return courseData;
+        });
+      
+            
+        for(let course in CourseData){
+          const addedCourse = {
+            subjectCode: CourseData[course].subjectCode,
+            subjectName: CourseData[course].subjectName,
+            ectsCredit: CourseData[course].ectsCredit,
+            subjectCredit: CourseData[course].subjectCredit,
+            subjectLevel: CourseData[course].subjectLevel,
+            subjectType: CourseData[course].subjectType,
+          }
+          await instance.post('https://localhost:7031/api/Subjects/AddSubject', addedCourse).then((response) => {
+             successfulResponses++;
+          }
+          ).catch((error) => {
+            console.error('POST request failed:', error);
+            unsuccessfulResponses++;
+          }
+          );
+        }
           await page.waitForSelector('input[type="submit"][name="SubmitBack"]');
+          await new Promise((resolve) => setTimeout(resolve, 500));
           await page.click("input[type=submit][name=SubmitBack]");
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
       }
-    } */
+      console.log("department:", option);
+    } 
+  }
 
-    await new Promise((resolve) => setTimeout(resolve, 2000000));
-
-    console.log(data);
+  console.log("unsuccessfulResponses:", unsuccessfulResponses);
 
     // Print or process the extracted data as needed
-    console.log(data);
     /*     await page.waitForSelector('input[type="submit"][name="SubmitBack"]');
     await page.click("input[type=submit][name=SubmitBack]");
     await new Promise((resolve) => setTimeout(resolve, 2000));
