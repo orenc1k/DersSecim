@@ -11,6 +11,7 @@ import DepartmentsSubjects from "./DepartmentsSubjects";
 import AdvancedSettings from "./AdvancedSettings";
 import TakenElectiveCourses from "./TakenElectiveCourses";
 import AddedCourses from "./AddedCourses";
+import { GetAllMustCoursesODTU,GetSubject } from "./Crud";
 
 const ScheduleTable = () => {
   const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
@@ -33,6 +34,7 @@ const ScheduleTable = () => {
   const [allCourses,setAllCourses]= useState([]);
   const fetchAllCoursesCalled = useRef(false);
   const [courseType, setCourseType] = useState("");
+  const [allMustCourses, setAllMustCourses] = useState([]);
 
   const [addedSubjects, setAddedSubjects] = useState([]); 
 
@@ -58,6 +60,7 @@ const ScheduleTable = () => {
   useEffect(() => {
     if (!fetchAllCoursesCalled.current) {
       fetchAllCourses();
+      handleAllMustCourses();
       fetchAllCoursesCalled.current = true;
     }
     if (selectedDepartmentFile) {
@@ -65,14 +68,7 @@ const ScheduleTable = () => {
         setAvailableClasses(module.default);
       });
     }
-    GetDepartmentsAsync()
-      .then((test) => {
-        test.sort((a, b) => a.localeCompare(b));
-        setTest(test);
-      })
-      .catch((error) => {
-        console.error("An error occurred:", error);
-      });
+
     setDeptCode(deptCode);
     setScheduleTableUpdated(false);
   }, [
@@ -84,6 +80,36 @@ const ScheduleTable = () => {
     fetchAllCoursesCalled,
   ]);
 
+  useEffect(() => {
+    GetDepartmentsAsync()
+    .then((test) => {
+      test.sort((a, b) => a.localeCompare(b));
+      setTest(test);
+    })
+    .catch((error) => {
+      console.error("An error occurred:", error);
+    });
+  }, []);
+
+
+  const handleAllMustCourses = async () => {
+    console.log("handleAllMustCourses");
+    const res = await GetAllMustCoursesODTU();
+    console.log(res.data);
+    res.data.map(async(course) => {
+      console.log("courseCode:",course);
+      var courseName = await GetSubject(course.subjectCode).then((res) => {
+        console.log("ders:",res.data.subjectName);
+        return res.data.subjectName;
+      });
+      const deptResponse = await GetDepartment(parseInt(course.subjectCode.toString().slice(0, 3)));
+      const deptName = deptResponse.data.deptShortName;
+      return setAllMustCourses((allMustCourses) => [
+        ...allMustCourses,
+        `${deptName}${course.subjectCode.toString().slice(4)}`+":"+courseName,
+      ]);
+    });
+  };
 
   const fetchAllCourses = async () => {
   
@@ -218,6 +244,8 @@ const ScheduleTable = () => {
           setCourseType={setCourseType}
           addedSubjects={addedSubjects}
           setAddedSubjects={setAddedSubjects}
+          allMustCourses={allMustCourses}
+          setAllMustCourses={setAllMustCourses}
           />    
      </div>
       </div>

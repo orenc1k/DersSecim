@@ -148,13 +148,6 @@ const main = async () => {
                   const parsedValue = parseFloat(testValue);
                   const course = {
                     subjectCode: parseInt(courseCode),
-                    subjectName: columns[2].textContent.split("(")[0].trim(),
-                    ectsCredit: parseFloat(ectsCredit),
-                    subjectCredit: parseFloat(
-                      columns[4].textContent.split("(")[0].trim()
-                    ),
-                    subjectLevel: columns[5].textContent.split("/")[0].trim(),
-                    subjectType: columns[6].textContent.split("/")[0].trim(),
                   };
                   courseData.push(course);
            }
@@ -166,7 +159,7 @@ const main = async () => {
       
             
         for(let course in CourseData){
-          const addedCourse = {
+/*           const addedCourse = {
             subjectCode: CourseData[course].subjectCode,
             subjectName: CourseData[course].subjectName,
             ectsCredit: CourseData[course].ectsCredit,
@@ -176,6 +169,13 @@ const main = async () => {
           }
           await instance.post('https://localhost:7031/api/Subjects/AddSubject', addedCourse).then((response) => {
              successfulResponses++;
+          }  */
+
+          const addedAvailableCourse = {
+            subjectCode: CourseData[course].subjectCode
+          }
+          await instance.post('https://localhost:7031/api/AvailableCourses/AddAvailableCourse',addedAvailableCourse).then((response) => { 
+            successfulResponses++;
           }
           ).catch((error) => {
             console.error('POST request failed:', error);
@@ -183,6 +183,7 @@ const main = async () => {
           }
           );
         }
+        console.log("CourseData:", CourseData);
           await page.waitForSelector('input[type="submit"][name="SubmitBack"]');
           await new Promise((resolve) => setTimeout(resolve, 500));
           await page.click("input[type=submit][name=SubmitBack]");

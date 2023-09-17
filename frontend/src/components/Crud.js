@@ -76,3 +76,9 @@ export const GetAllCoursesODTU = () => {
 export const GetAllMustCoursesODTU = () => {
   return axios.get("https://localhost:7031/api/MustCourse/GetAllMustCourses");
 }
+
+
+export const GetSubject = (subjectCode) => {
+
+  return axios.get("https://localhost:7031/api/Subjects/GetSubject/"+subjectCode);
+}

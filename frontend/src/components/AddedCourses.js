@@ -17,7 +17,6 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { GetAllMustCoursesODTU } from "./Crud";
 
 const AddedCourses = ({
   allCourses,
@@ -25,8 +24,9 @@ const AddedCourses = ({
   setCourseType,
   addedSubjects,
   setAddedSubjects,
+  allMustCourses,
+  setAllMustCourses
 }) => {
-  const [allMustCourses, setAllMustCourses] = useState([]);
   const [selectACourse, setSelectACourse] = useState(null);
   const [isTableOpen, setIsTableOpen] = useState(false); 
 
@@ -47,10 +47,10 @@ const AddedCourses = ({
   useEffect(() => {
     if (!fetchAllCoursesCalled.current) {
       fetchAllCoursesCalled.current = true;
-      handleAllMustCourses();
     }
     setIsTableOpen(addedSubjects.length > 0);
   }, [addedSubjects]);
+
 
   const handleAddSubject = () => {
     setAddedSubjects([...addedSubjects, selectACourse]);
@@ -62,17 +62,6 @@ const AddedCourses = ({
     setAddedSubjects(addedSubjects.filter((s) => s !== subject));
   };
 
-  const handleAllMustCourses = async () => {
-    console.log("handleAllMustCourses");
-    const res = await GetAllMustCoursesODTU();
-    console.log(res.data);
-    res.data.map((course) => {
-      return setAllMustCourses((allMustCourses) => [
-        ...allMustCourses,
-        course.courseName,
-      ]);
-    });
-  };
 
   return (
     <div>
@@ -124,7 +113,7 @@ const AddedCourses = ({
               courseType === "AllCourses"
                 ? allCourses.filter((option) => option.toLowerCase())
                 : courseType === "Must"
-                ? allMustCourses.filter((option) => option.toLowerCase())
+                ? allMustCourses.filter((option) => option)
                 : []
             }
             renderInput={(params) => (
