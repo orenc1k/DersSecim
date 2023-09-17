@@ -20,7 +20,6 @@ namespace ODTUDersSecim.Models
 
 
 
-
         [ForeignKey("DeptCode")]
         public int? DeptCode { get; set; }
         public virtual Departments? Departments { get; set; }
