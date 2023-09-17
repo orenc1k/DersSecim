@@ -133,7 +133,7 @@ namespace ODTUDersSecim.Services
 
         }
 
-        public async Task<bool> MustCourseCheck(int subjectCode, int deptCode, int semester)
+        public async Task<bool> MustCourseCheck(int? subjectCode, int? deptCode, int? semester)
         {
             var checkMustCourse = await odtuDersSecimDbContext.MustCourses.Where(x => x.DeptCode == deptCode &&
                                                                                       x.SubjectCode== subjectCode &&
