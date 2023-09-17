@@ -32,6 +32,8 @@ builder.Services.AddScoped<SubjectsService>();
 builder.Services.AddScoped<SubjectSectionsService>();
 builder.Services.AddScoped<SectionDaysService>();
 builder.Services.AddScoped<MustCourseService>();
+builder.Services.AddScoped<AvailableCoursesService>();
+builder.Services.AddScoped<ElectiveCoursesService>();
 
 builder.Services.AddSwaggerGen();
 

@@ -112,4 +112,3 @@
 /Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/obj/Debug/net6.0/ODTUDersSecim.pdb
 /Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/obj/Debug/net6.0/ODTUDersSecim.genruntimeconfig.cache
 /Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/obj/Debug/net6.0/ref/ODTUDersSecim.dll
-/Users/arel/Desktop/DersSecim/Backend/ODTUDersSecim/obj/Debug/net6.0/ODTUDersSecim.sourcelink.json
